@@ -1,0 +1,13 @@
+Object-oriented programming
+state
+object
+programming paradigm
+procedural programming
+imperative programming
+encapsulation
+factory function
+constructor
+instance
+class
+interface
+implementation
