@@ -1,4 +1,4 @@
-## Getters and Setters
+# Getters and Setters
 
 As we saw at the end of the last section, there are times we want to hide internal data from being accessed _or_ mutated from outside the object (e.g. the `powerUps` array). But what do we do when we want a property to be accessible but not mutable? You use a getter function.
 

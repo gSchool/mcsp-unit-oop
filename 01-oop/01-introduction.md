@@ -64,6 +64,8 @@ console.log(player.hp); // 2
 
 All we did between these two code snippets is moved the behaviors (functions) into the objects as methods. At first glance, this may seem like a superficial change, but let's think about the consequences of this change, not only in the code itself, but also in how we model problems and design solutions.
 
+_Slides on this keyword: https://docs.google.com/presentation/d/1BpGK7MzqYqv2e-29NducThKMsQNuf85yg9axy9Nt4u4/present?slide=id.g962c2c0806_0_48_
+
 The first thing you may notice is that, in the oop example, the methods take no parameters. The reason for this is that since they are contained in an object, we can access and modify the encapsulated state (i.e. properties) through the `this` keyword. We'll go more in depth as to how `this` works, but for now, think of it as an implicit parameter which is passed to object methods which refers to the object in which those methods are defined. The way `this` gets set is by looking at whatever comes before the dot when invoking the method. In this case, both `getStarPowerUp` and `takeDamage` are invoked on the `player` object, so that is what `this` will refer to inside those methods.
 
 So, that covers the ramifications to our code, but what difference does it make when designing software? Well, in the procedural example, our program is a collection of global data and various functions for operating on that data. It's up to the programmer to connect the two. In the oop example, we have an entity which contains data and methods for _updating itself_. In oop, you are thinking about entities interacting with one another by passing messages<sup id="2">[2](#f2)</sup> to one another (e.g. calling methods) rather than various functions transforming global state.
