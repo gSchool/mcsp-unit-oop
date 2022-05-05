@@ -1,13 +1,10 @@
-let myName = "Jay";
-const obj = {
-  get name() {
-    return myName;
+const player = {
+  powerUps: [],
+  getStarPowerUp() {
+    console.log(this);
+    this.powerUps.push("star");
   },
 };
 
-console.log(obj.name); // Jay
-myName = "Anjali";
-console.log(obj.name); // Anjali
-
-obj.name = "Marcus";
-console.log(obj.name); // Anjali
+const myFn = player.getStarPowerUp;
+myFn();
