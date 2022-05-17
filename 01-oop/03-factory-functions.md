@@ -2,8 +2,6 @@
 
 In the previous section, we introduced the object-oriented programming paradigm and showed some examples comparing it to procedural programming. Let's take another look at that example now:
 
-_Object-Oriented Introductory Example_
-
 ```js
 const player = {
   name: "Mario",
@@ -24,7 +22,7 @@ player.takeDamage();
 console.log(player.hp); // 2
 ```
 
-This example was great at demonstrating the concept of object-orientation, but what would happen if we wanted to deal with more than one player object? What might that code look like?
+This example demonstrated the concept of object-orientation well enough, but what would happen if we wanted to deal with more than one player object? What might that code look like?
 
 ```js
 const player1 = {
@@ -77,15 +75,13 @@ const Player = (name, hp) => {
 
 const player1 = Player("Mario", 1);
 const player2 = Player("Luigi", 1);
-const player3 = Player("Peach", 1);
-const player4 = Player("Toad", 1);
 ```
 
 Much better! What we've done here is created a factory function. A factory function is simply a function which returns an object. We give them a special name because they approximate a constructor function, which is just a special name given to function which creates many instances of a particular type of object. The methods stayed exactly the same, but the `name` and `hp` properties needed to be configurable, so we handled that with regular function parameters.
 
 ## Adding Information Hiding
 
-We can improve on this further, however. Let's consider some code which would cause our objects to fail in unexpected ways and see if we can devise a way to prevent that type of abuse of our poor objects.
+We can improve on this pattern further, however. Let's consider some code which would cause our objects to fail in unexpected ways and see if we can devise a way to prevent that type of abuse of our poor objects.
 
 ```js
 const player1 = Player("Mario", 2);
@@ -116,7 +112,7 @@ const Player = (name, hp) => {
 
 const player = Player("Mario", 2);
 player.powerUps = null; // Adds a powerUps property to our object, but doesn't break our methods!
-console.log(powerUps); // null
+console.log(player.powerUps); // null
 player.getStarPowerUp(); // Doesn't throw
 player.takeDamage();
 console.log(player.hp); // 2
@@ -124,10 +120,10 @@ console.log(player.hp); // 2
 
 There we go!
 
-What we've achieved here is a level of information hiding. Information hiding is exactly what it sounds like: the process of hiding information (or data) internal to the object from being read or modified from outside that object. In this example, we're hiding the `powerUps` property, because it's part of the internal implementation of our `Player` object. Users of `Player` objects don't need to know wether we store power-ups in an array, an object, or any other structure. In fact, they don't need to know about the `powerUps` property at all! They just need to be able to call the `getStarPowerUp` and `takeDamage` methods as the game progresses.
+What we've achieved here is a level of information hiding. Information hiding is exactly what it sounds like: the process of hiding information (or data) internal to the object from being read or modified from outside that object. In this example, we're hiding the `powerUps` property, because it's part of the internal implementation of our `Player` object. Users of `Player` objects don't need to know wether we store power-ups in an array, an object, or any other structure. In fact, they don't need to know about the `powerUps` property at all! They just need to be able to call the `getStarPowerUp` and `takeDamage` methods as the game progresses. Hiding internal details not only prevents strange errors like the one displayed above, but also makes your objects more flexible. For example, after implementing information hiding, if you wanted to change from storing power-ups in a `Set` instead of an array you can do so without fear, but in the previous example, you may have to be careful as other code may be relying on the fact that power-ups are stored in an array, and changing it to a `Set` would now constitute a breaking change.
 
-But what about the `name` and `hp` properties? Should we allow those to be mutated from the outside? Probably not, but to properly prevent mutation while still allowing access requires an understanding of getters and setters, which is the topic of the next section. So hold tight.
+Now, what about the `name` and `hp` properties? Should we allow those to be mutated from the outside? Probably not, but to properly prevent mutation while still allowing access requires an understanding of getters and setters, which is the topic of the next section, so hold tight.
 
 ## Conclusion
 
-When you need a fleet of similar objects, create a factory function which takes of creating instances for you. To hide implementation details, make use of clojure variables which are inaccessible to the outside.
+When you need a fleet of similar objects, create a factory function which takes of creating instances for you. To hide implementation details, make use of closure variables which are inaccessible to the outside.

@@ -7,6 +7,7 @@ Highlight Vocab throughout sections
 - procedural programming
 - imperative programming
 - encapsulation
+- information hiding
 - factory function
 - constructor
 - instance

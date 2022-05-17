@@ -1,8 +1,6 @@
 # Getters and Setters
 
-As we saw at the end of the last section, there are times we want to hide internal data from being accessed _or_ mutated from outside the object (e.g. the `powerUps` array). But what do we do when we want a property to be accessible but not mutable? You use a getter function.
-
-A getter is special type of function defined on an object which allows read-only access to a property. Additionally, they allow you to be alerted when a property is accessed, in case some other type of work needs to be done in that case. Here's a simple example of a getter at work.
+As we saw at the end of the last section, there are times we want to hide internal data from being accessed _or_ mutated from outside the object (e.g. the `powerUps` array). But what do we do when we want a property to be accessible but not mutable? This is where getters step in. A getter is special type of function defined on an object which allows read-only access to a property. Additionally, they allow you to be alerted when a property is accessed, in case some other type of work needs to be done in that case. Here's a simple example of a getter at work.
 
 ```js
 let myName = "Jay";
@@ -37,7 +35,7 @@ obj.name = "Anjali";
 console.log(obj.name); // Anjali
 ```
 
-Now you may be asking yourself how a getter/setter pair is is better than just defining a normal property. If you allow access and mutation of a property, why not just expose it on the object? Well, one added benefit of the getter/setter is that we have more control over how properties are set and accessed. What if we wanted to keep track of every time a property is accessed or what if we wanted to do some validating before accepting a property mutation? With a normal property, there's no way for us to know, but with a getter/setter pair, we can just add some additional logic to our getter/setter functions like so:
+Now you may be asking yourself how a getter/setter pair is better than just defining a normal property. If you allow access and mutation of a property, why not just expose it on the object? Well, one added benefit of the getter/setter is that we have more control over how properties are set and accessed. What if we wanted to keep track of every time a property is accessed or perform validation before accepting a property mutation? With a normal property, there's no way for us to hook into access/mutation, but with a getter/setter pair, we can just add some additional logic to our getter/setter functions like so:
 
 ```js
 let myName = "Jay";
@@ -61,7 +59,7 @@ console.log(timesAccessed); // 2
 obj.name = 4; // Error: Invalid name given
 ```
 
-Now that we have a basic understanding of getters and setters, let's return to our example we ended on from the last section:
+Now that we have a basic understanding of getters and setters, let's return to the example we ended with in the previous section:
 
 ```js
 const Player = (name, hp) => {
@@ -88,13 +86,11 @@ The answer is, it depends. Part of object-oriented design is separating an inter
 
 As for the `hp` property, do you want users of your object to be able to read the `hp` property directly, or just alert them when `hp` goes to zero? Although there's no clear answer to that question (it depends on your design) one thing that's certain is we that don't want to give arbitrary write access to this property and only allow it to be updated in pre-defined ways (e.g. `takeDamage` and `getMushroom`).
 
-For our example, let's say that we don't want to expose the `hp` property at all, and only expose the a read-only `name` property. To do the latter, we can make use of a getter.
+For our example, let's say that we don't want to expose the `hp` property at all, and only expose the read-only `name` property. To do the latter, we can make use of a getter:
 
 ```js
-const Player = (newName, newHp) => {
+const Player = (name, hp) => {
   const powerUps = [];
-  let hp = newHp;
-  const name = newName;
 
   return {
     get name() {
@@ -116,7 +112,7 @@ player.name = "Luigi";
 console.log(player.name); // Mario
 ```
 
-Great! We've hidden all the internal details and only exposed the parts needed by the outside. Our interface now consists of three things:
+Great! We've hidden all the internal details and only exposed the parts needed by the outside. As a side-benefit, we've also eliminated any use of `this` which can be confusing for beginners, thus making our code slightly more readable. Our interface now consists of three things:
 
 - A `name` property (read-only)
 - A `getStarPowerUp` method
@@ -127,10 +123,8 @@ If more properties/methods are needed later on, or we decide to expose an existi
 > If we were really paranoid, we could `freeze` our object to ensure no one added properties to or removed properties from it.
 >
 > ```js
-> const Player = (newName, newHp) => {
+> const Player = (name, hp) => {
 >   const powerUps = [];
->   let hp = newHp;
->   const name = newName;
 >
 >   return Object.freeze({
 >     get name() {
