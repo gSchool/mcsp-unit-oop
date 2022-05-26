@@ -4,7 +4,7 @@ In this section, we'll introduce the topic of object-oriented programming (aka O
 
 ## Core Concepts
 
-The central idea of object-oriented programming is to package state and behaviors together into a singular entity called an object. The state comes in the form of fields or properties and the behaviors are typically called methods. The process of bundling state and behvaiors is known as encapsulation<sup id="1">[1](#f1)</sup> and is one of the pillars of OOP.
+The central idea of object-oriented programming is to package state and behaviors together into a singular entity called an object. The state comes in the form of fields or properties and the behaviors are typically called methods. The process of bundling state and behvaiors is known as encapsulation<sup id="1">[1](#f1)</sup> and is one of the pillars of OOP. One way to conceptualize this style of programming is to think of objects like cells in a biological system. Rather than each cell being able to muck around with the internals of other cells, each cell encapsulates it's internals inside a nucleus and other cells communicate with it by sending chemical messages. In this way, each cell can remain relatively simple and self-contained, but through collaboration with other cells, compose a complex, self-correcting system which is greater than the sum of its parts. In fact, this is the analogy used by the person who is known for developing OOP, Alan Kay, who had a background in biology before entering the field of computer science.
 
 ## Programming Paradigms
 
@@ -64,7 +64,67 @@ The first thing you may notice is that, in the oop example, the methods take no 
 
 So, that covers the ramifications to our code, but what difference does it make when designing software? Well, in the procedural example, our program is a collection of global data and various functions for operating on that data. It's up to the programmer to connect the two. In the oop example, we have an entity which contains data and methods for _updating itself_. In oop, you are thinking about entities interacting with one another by passing messages to one another (e.g. calling methods) rather than various functions transforming global state.
 
-In reality, most programs written in an oop style still make use of procedural programming in some parts. It doesn't always make sense to make everything an object. Sometimes all you need is a general-purpose function which doesn't really fit into any particular type of entity or object.
+In reality, most programs written in an OOP style still make use of procedural programming in some parts. It doesn't always make sense to make everything an object. Sometimes all you need is a general-purpose function which doesn't really fit into any particular type of entity or object.
+
+### !challenge
+
+* type: multiple-choice
+* id: e8bc28ae-f09d-4261-b9ce-61d41797aab1
+* title: OOP Basics
+
+### !question
+
+The following code snippet is written in an object-orientated style:
+
+```js
+const person = {
+  name: "Marcus",
+  age: 2,
+};
+
+const grow = (person) => {
+  person.age++;
+};
+
+grow(person);
+console.log(person.age); // 3
+```
+
+### !end-question
+
+### !options
+
+* True
+* False
+
+### !end-options
+
+### !answer
+
+False
+
+### !end-answer
+
+### !explanation
+
+This is an example of proceduaral programming, because the data (the `person` object) and the function (or procedure) for operating on that data (the `grow` function) are separate. In an object-oriented style, these would be encapsulated into an object like so:
+
+```js
+const person = {
+  name: "Marcus",
+  age: 2,
+  grow(person) {
+    this.age++;
+  },
+};
+
+person.grow();
+console.log(person.age); // 3
+```
+
+### !end-explanation
+
+### !end-challenge
 
 ## Brief History
 
@@ -72,7 +132,7 @@ To better understand the motivation behind oop and the types of problems OOP was
 
 ## Takeaways
 
-1. Object-Oriented Programming (OOP) is a programming paradigm where state and behavior is bundled together in an object.
+1. Object-Oriented Programming (OOP) is a programming paradigm where state and behavior are bundled together in an object.
 2. A programming paradigm is a language-agnostic style of programming.
 
 <sup id="f1">[1](#1)</sup>Depending on who you ask, encapsulation also includes the idea of separating the internals of an object from its external interface, but most people refer to that property as information hiding.

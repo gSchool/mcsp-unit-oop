@@ -1,33 +1,22 @@
-class Vehicle {
-  position = 0;
+const Player = (name, hp) => {
+  const powerUps = [];
 
-  constructor(speed) {
-    this.speed = speed;
-  }
+  return Object.freeze({
+    name,
+    getStarPowerUp() {
+      powerUps.push("star");
+    },
+    takeDamage() {
+      if (!powerUps.includes("star")) {
+        hp -= 1;
+      }
+    },
+  });
+};
 
-  move() {
-    this.position += this.speed;
-  }
-}
-
-class Car extends Vehicle {
-  honk() {
-    console.log("beep beep");
-  }
-}
-
-class Boat extends Vehicle {
-  honk() {
-    console.log("*foghorn sounds*");
-  }
-}
-
-class Bike extends Vehicle {
-  honk() {
-    console.log("ding ding");
-  }
-}
-
-const bike = new Bike(23);
-bike.move();
-console.log(bike.position);
+const player = Player("Mario", 2);
+player.name = null; // No effect
+delete player.name; // No effect
+player.newProp = 4; // No effect
+console.log(player.name); // Mario
+console.log(player.newProp); // undefined

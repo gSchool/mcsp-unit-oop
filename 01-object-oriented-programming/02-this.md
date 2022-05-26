@@ -1,6 +1,6 @@
-# `this` Keyword
+# this Keyword
 
-In previous sections, we used the `this` keyword in our methods but never dove into how it works. In this section, we'll explore the `this` keyword in depth. Let's start by taking a look at one of the first examples we showed to demonstrate object-oriented programming:
+In the previous section, we used the `this` keyword in our methods but never dove into how it works. In this section, we'll explore the `this` keyword in depth. Let's start by taking a look at one of the first examples we showed to demonstrate object-oriented programming.
 
 ```js
 const player = {
@@ -34,6 +34,8 @@ const player = {
 const getStarPowerUp = (player) => {
   player.powerUps.push("star");
 };
+
+getStarPowerUp(player);
 ```
 
 _Object-Oriented_
@@ -49,7 +51,7 @@ const player = {
 player.getStarPowerUp();
 ```
 
-In the procedural example, the object instance is passed _explicitly_ to the `getStarPowerUp` function, but in the object-oriented example, it is passed _implicitly_. Without this behavior, we would have to do something like the following:
+In the procedural example, the object instance is passed _explicitly_ to the `getStarPowerUp` function, but in the object-oriented example, it is passed _implicitly_ via `this`. Without this behavior, we would have to do something like the following:
 
 ```js
 const player = {
@@ -62,7 +64,40 @@ const player = {
 player.getStarPowerUp(player);
 ```
 
-In addition to looking silly, passing the instance explicitly with `player.getStarPowerUp(player)` also diminishes one of the benefits of OOP known as dynamic dispatch, which we'll get into later. So although the implicit passing of `this` may be confusing at first, it helps us to write more readable code. Now that we have a better understanding of the behavior of `this`, let's take a look at some gotchas when using it.
+In addition to looking silly, passing the instance explicitly with `player.getStarPowerUp(player)` also negates one of the fatures of OOP known as polymorphism. So although the implicit passing of `this` may be confusing at first, it helps us to write more readable code. Now that we have a better understanding of the behavior of `this`, let's take a look at some gotchas when using it.
+
+### !challenge
+
+* type: checkbox
+* id: ff1e3ceb-fb62-4157-af7d-a10956de7dc6
+* title: This
+
+### !question
+
+In JavaScript, `this` is (select all that apply):
+
+### !end-question
+
+### !options
+
+* A keyword
+* A mechanism for facilitating object-oriented programming in JavaScript
+* A function which caches parameters passed to a method
+* An implicit parameter passed to methods which refers to the object in which that method is contained
+
+### !end-options
+
+### !answer
+
+* A keyword
+* A mechanism for facilitating object-oriented programming in JavaScript
+* An implicit parameter passed to methods which refers to the object in which that method is contained
+
+### !end-answer
+
+### !end-challenge
+
+## Gotchas
 
 ### Gotcha 1: Arrow Functions
 
@@ -81,7 +116,7 @@ player.getStarPowerUp(); // TypeError: Cannot read properties of undefined (read
 
 As you can see, `this` was not set properly. The reason for this is because arrow functions do not define their own execution context (i.e. they do not allow changing the `this` keyword). Instead, they inherit the context from the outer scope. Although this may seem like a limitation, we'll see in the next section that this behavior actually comes in handy.
 
-## Gotcha 2: Nested Functions
+### Gotcha 2: Nested Functions
 
 Sometimes you may want to define a helper function within a method, like in the following example:
 
@@ -139,7 +174,7 @@ const person = {
 person.printBio(); // Shigeru Miyamoto, age: 69
 ```
 
-## Gotcha 3: Lost Context (`call`, `bind` and `apply`)
+### Gotcha 3: Lost Context (`call`, `bind` and `apply`)
 
 In most cases, this implicit parameter passing works fine, but there are times when it doesn't work the way you expect. To demonstrate this, let's assume that rather than calling the `getStarPowerUp` method immediately, you may want to queue it up to happen at a later time using `setTimeout`. Our first approach may look something like this: `setTimeout(player.getStarPowerUp, 1000)`. However, when we run that code, we get: `TypeError: Cannot read properties of undefined (reading 'push')`. Take some time to consider what might be happening and then continue on.
 
@@ -152,7 +187,7 @@ const myFn = player.getStarPowerUp;
 myFn(); // TypeError: Cannot read properties of undefined (reading 'push')
 ```
 
-To fix this, we have a few options. Intuitively, we could just create a new function to the `setTimeout` method and call the `getStarPowserUp` method inside of that. Here's what that would look like:
+To fix this, we have a few options. Intuitively, we could just create a new function to the `setTimeout` method and call the `getStarPowserUp` method inside of that. Here's how that would look:
 
 ```js
 setTimeout(() => player.getStarPowerUp(), 1000);
@@ -160,7 +195,9 @@ setTimeout(() => player.getStarPowerUp(), 1000);
 
 The reason this works, is because rather than extracting the `getStarPowerUp` function from the player object, we are deferring that execution until after the time has elapsed and then calling the method directly, allowing JavaScript to use the context to set the `this` implicit parameter to the `player` object. This works great! But there are a few other methods for manipulating the `this` keyword which you should be aware of.
 
-The first is called `bind`. `bind` creates a new function with a given object set as it's context. To use it in our `setTimeout` example, we would do the following.
+## Bind, Call, and Apply
+
+The first is called `bind`. `bind` creates a new function with a given object set as it's context. To use it in our `setTimeout` example, we would do the following:
 
 ```js
 setTimeout(player.getStarPowerUp.bind(player), 1000);
@@ -202,12 +239,82 @@ console.log(new Food("cheese", 5)); // { name: "cheese", price: 5, category: "fo
 
 This pattern has fallen out of favor with the advent of es6 classes (which we'll be covering in an upcoming section). So, although you won't see many uses of `call` and `apply` in modern codebases, these methods are still important to know about, particularly when working in legacy codebases.
 
+### !challenge
+
+* type: code-snippet
+* id: 7e6d2900-32d0-4fde-824a-a27292901576
+* language: javascript
+* title: Bind, Call and Apply
+
+### !question
+
+Using the `.call` method, write an implementation of the `.bind` method.
+
+NOTE: Do not use the `.bind` method.
+
+### !end-question
+
+### !placeholder
+
+```js
+const bind = (fn, context) => {
+  // Write code here.
+}
+```
+
+### !end-placeholder
+
+### !tests
+
+```js
+describe('bind', () => {
+  it('returns a new function whose `this` value is bound to the given context', () => {
+    const context = {};
+    function testFn() {
+      expect(this).to.equal(context);
+    }
+    bind(testFn, context)();
+  });
+
+  it('returns a new function which passes arguments through to original function', () => {
+    const context = {};
+    function testFn(arg1, arg2, arg3) {
+      expect(arg1).to.equal(1);
+      expect(arg2).to.equal(2);
+      expect(arg3).to.equal(3);
+    }
+
+    bind(testFn, context)(1, 2, 3);
+  });
+
+  it('returns a new function which returns values from original function', () => {
+    const context = {};
+    function testFn() {
+      return 12;
+    }
+
+    const result = bind(testFn, context)();
+    expect(result).to.equal(12);
+  });
+})
+```
+
+### !end-tests
+
+### !hint
+
+1. Review ES6 [rest/spread](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) to handle variable arguments.
+1. Remember that functions can provide functions as return values.
+
+### !end-hint
+
+### !end-challenge
+
 ## Takeaways
 
 1. The `this` keyword is used to make OOP more ergonomic
-2. The JavaScript interpreter
+1. The JavaScript interpreter
 
 ## Questions
 
 Write an implementation of the `bind` method using `call` or `apply`.
-Write a function which prints out all methods defined on a object or anywhere in it's prototype chain.
