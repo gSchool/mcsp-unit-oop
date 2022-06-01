@@ -22,8 +22,8 @@ Standards:
     Path: /01-object-oriented-programming/03-factory-functions.md
     UID: f4807401f59ace9a6cba4fb82fb8a28a
   - Type: Lesson
-    Path: /01-object-oriented-programming/04-getters-and-setters.md
-    UID: 6cba21e07b2b099383e3da8de303297a
+    Path: /01-object-oriented-programming/04-information-hiding.md
+    UID: e2a3117e10e0b3d7c01ae83f72f7ba08
   - Type: Lesson
     Path: /01-object-oriented-programming/05-es6-classes.md
     UID: a5863e1363d01ba050d818666b297673

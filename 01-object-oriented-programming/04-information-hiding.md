@@ -1,5 +1,19 @@
 # Getters and Setters
 
+### !callout
+
+<details>
+  <summary>Learning Objectives</summary>
+
+  By the end of the lesson, you should be able to:
+  - Define information (data) hiding in the context of OOP.
+  - Explain the benefit of information hiding.
+  - Distinguish between an interface and an implementation.
+  - Be able to use getters and setters achieve information hiding in your factory functions.
+</details>
+
+### !end-callout
+
 As we saw at the end of the last section, there are times we want to hide internal data from being accessed _or_ mutated from outside the object (e.g. the `powerUps` array). But what do we do when we want a property to be accessible but not mutable? This is where getters come in. A getter is special type of function defined on an object which allows read-only access to a property. Additionally, they allow you to be alerted when a property is accessed, in case some other type of work needs to be done in that case. Here's a simple example of a getter at work.
 
 ```js
@@ -80,11 +94,7 @@ const Player = (name, hp) => {
 };
 ```
 
-We've already hidden some information by moving the `powerUps` property to a closure variable, but what about the `name` and `age` properties? Should we hide those as well?
-
-The answer is...it depends. Part of good object-oriented design is separating an interface (those parts externally accessable) from its implementation (those parts internal to the object). The `name` property should certainly be readable from the outside, as we're not doing anything else with it, but probably not writable.
-
-As for the `hp` property, do you want users of your object to be able to read the `hp` property directly, or just alert them when `hp` goes to zero? Although there's no clear answer to that question (it depends on the application) one thing that's certain is we that don't want to give arbitrary write access to this property and instead only allow it to be updated in pre-defined ways (e.g. `takeDamage` or `getMushroom`).
+We've already hidden some information by moving the `powerUps` property to a closure variable, but what about the `name` and `age` properties? Should we hide those as well? The answer is...it depends. The `name` property should certainly be readable from the outside, as we're not doing anything else with it, but probably not writable. As for the `hp` property, do you want users of your object to be able to read the `hp` property directly, or just alert them when `hp` goes to zero? Although there's no clear answer to that question (it depends on the application) one thing that's certain is we that don't want to give arbitrary write access to this property and instead only allow it to be updated in pre-defined ways (e.g. `takeDamage` or `getMushroom`).
 
 For our example, let's say that we don't want to expose the `hp` property at all, and only expose the read-only `name` property. To do the latter, we can make use of a getter.
 
@@ -112,13 +122,19 @@ player.name = "Luigi";
 console.log(player.name); // Mario
 ```
 
-Great! We've hidden all the internal details and only exposed the parts needed by the outside. As a side-benefit, we've also eliminated any use of `this` which can be confusing for beginners, thus making our code more readable. Our interface now consists of three things:
+Great! We've hidden all the internal details and only exposed the parts needed by the outside. As a side-benefit, we've also eliminated any use of `this` which can be confusing for beginners, thus making our code more readable.
 
-- A `name` property (read-only)
-- A `getStarPowerUp` method
-- A `takeDamage` method
+## Interface vs Implementation
 
-If more properties/methods are needed later on, or we decide to expose an existing property, we can do that, but it's best to keep your interfaces to the bare minimum as it reduces the amount we expose to the outside, and thus the amount we're responsible for maintaining. In a small codebase, exposing extra information may not be such a big deal, but as your project grows, the objects you create may be used in hundreds of different places, and if those places relied on mutating the `powerUps` property, for example, and you change it's implementation later on, you'll break those usages.
+Part of good object-oriented design is separating the interface (that which an object exposes to the outside) of an object from its implementation (those parts internal to the object). You can think of an interface as a contract which your object has with its consumers and the implementation is the means by which that contract is fulfilled. For a real-world example, if you met with a client to build them an e-commerce website, you may draft a contract which stipulates the user-facing features which needed to be completed as well as a timeframe in which those features should be completed. But it would be counter-productive to also specify that it would be done using Postgres and node. Those are implementation details which are subject to change and irrelevant from the perspective of your client.
+
+In the previous example, objects created with our `Player` factory function have an interface consisting of three things:
+
+- A `name` property (read-only) - A string containing the name of the player.
+- A `getStarPowerUp` method - A method which gives the player a star power up.
+- A `takeDamage` method - A method which causes the player to take 1 hit of damage.
+
+The implementation would consist of how the methods actually acomplish their tasks, and this should be abstracted away from the consumer so that we are free to change it at a later date without breaking our consumers. If more properties/methods are needed later on, or we decide to expose an existing property, we can do that, but it's best to keep your interfaces to the bare minimum as it reduces the amount we expose to the outside, and thus the amount we're responsible for maintaining. In a small codebase, exposing extra information may not be such a big deal, but as your project grows, the objects you create may be used in hundreds of different places, and if those places relied on mutating the `powerUps` property, for example, and you change it's implementation later on, you'll break those usages.
 
 ## Object.freeze
 

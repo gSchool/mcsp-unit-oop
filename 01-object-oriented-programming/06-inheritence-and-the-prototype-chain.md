@@ -1,5 +1,21 @@
 # Inheritence and the Prototype Chain
 
+### !callout
+
+<details>
+  <summary>Learning Objectives</summary>
+  
+  By the end of the lesson, you should be able to:
+  - Explain the purpose of inheritance and how it is used.
+  - Explain the purpose of the `super` keyword.
+  - Call a parent method inside of a child class.
+  - Explain the relationship between a subclass and a superclass.
+  - Understand the purpose of the prototype chain.
+  - Traverse a prototype chain programmatically.
+</details>
+
+### !end-callout
+
 In the last section, we introduced ES6 classes and its various components (the constructor, methods, and fields). However, we omitted one important feature: inheritence and the `extends` keyword. Before diving into the code, let's briefly explore the topic of inheritence in the context of OOP generally.
 
 Along with encapsulation, inheritence is one of the major pillars of OOP. It refers to the ability of some classes to adopt state and behaviors from other classes, in order to facilitate code re-use and to model hierachical relationships. For example, if you were building a game where you could drive multiple types of vehicles (cars, boats, bikes) you might start by creating a class for each type of vehicle.

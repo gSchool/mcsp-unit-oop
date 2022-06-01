@@ -1,5 +1,18 @@
 # Factory Functions
 
+### !callout
+
+<details>
+  <summary>Learning Objectives</summary>
+
+  By the end of the lesson, you should be able to:
+  - Explain the purpose of using the `this` keyword in the context of OOP.
+  - Understand the how `this` is setup when calling a method of an object.
+  - Recognize and fix cases where `this` does not refer to the correct object.
+</details>
+
+### !end-callout
+
 In a previous section, we introduced the object-oriented programming paradigm and showed some examples comparing it to procedural programming. Let's take another look at that example now:
 
 ```js
@@ -91,9 +104,11 @@ Much better! What we've done here is created a factory function. A factory funct
 Write a factory function with the following specifications:
 
 Name: `Printer`
+
 Properties (Should be configurable via parameters):
 - `name` - `String` (the name of the printer, e.g. 'Canon WiFi.')
 - `sheetCount` - `Number` (The number of sheets in the printer. Defaults to zero if not provided.)
+
 Methods:
 - `addSheets` - Takes a number of pages as a parameter and adds that number to the `sheetCount` property.
 - `printJob` - Takes two parameters (name: `String`, size: `Number`) as parameters, and prints a message to the console for each page in the job with the following format: `Printing [jobName] page [currentPage] of [pageCount]` and subtracts that number from the `paperCount` property. If the number of pages in the job exceeds `sheetCount`, throw an `Error` with a message of `Job failed: please refill paper tray!`.
@@ -204,7 +219,9 @@ console.log(player.hp); // 2
 
 There we go!
 
-What we've achieved here is a level of information hiding. Information hiding is exactly what it sounds like: the process of hiding information (i.e. data) internal to the object from being read or modified from outside that object. In this example, we're hiding the `powerUps` property, because it's part of the internal implementation of our `Player` object. Users of `Player` objects don't need to know wether we store power-ups in an array, an object, or any other structure. In fact, they don't need to know about the `powerUps` property at all! They just need to be able to call the `getStarPowerUp` and `takeDamage` methods as the game progresses. Hiding internal details not only prevents strange errors like the one displayed above, but also makes your objects more flexible. For example, after implementing information hiding, if you wanted to change from storing power-ups in a `Set` instead of an array you can do so without fear, but in the previous example, you may have to be careful as other code may be relying on the fact that power-ups are stored in an array, and changing it to a `Set` would now constitute a breaking change.
+What we've achieved here is a level of information hiding. Information hiding is exactly what it sounds like: the process of hiding information (i.e. data) internal to the object from being read or modified from outside that object. In this example, we're hiding the `powerUps` property, because it's part of the internal implementation of our `Player` object. Users of `Player` objects don't need to know wether we store power-ups in an array, an object, or any other structure. In fact, they don't need to know about the `powerUps` property at all! They just need to be able to call the `getStarPowerUp` and `takeDamage` methods as the game progresses.
+
+Hiding internal details not only prevents strange errors like the one displayed above, but also makes your objects more flexible. For example, after implementing information hiding, if you wanted to change from storing power-ups in a `Set` instead of an array you can do so without fear, but in the previous example, you may have to be careful as other code may be relying on the fact that power-ups are stored in an array, and changing it to a `Set` would now constitute a breaking change.
 
 Now, what about the `name` and `hp` properties? Should we allow those to be mutated from the outside? Probably not, but to properly prevent mutation while still allowing access requires an understanding of getters and setters, which is the topic of the next section, so hold tight.
 
