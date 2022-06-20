@@ -1,15 +1,13 @@
 # this Keyword
 
-### !callout
+### !callout-
 
-<details>
-<summary>Learning Objectives</summary>
+### Learning Objectives
 
 By the end of the lesson, you should be able to:
-
-- Explain the purpose of using the ‘this’ keyword when creating a class.
-
-</details>
+- Explain the purpose of using the `this` keyword in the context of OOP.
+- Understand the how `this` is setup when calling a method of an object.
+- Recognize and fix cases where `this` does not refer to the correct object.
 
 ### !end-callout
 
@@ -322,12 +320,3 @@ describe('bind', () => {
 ### !end-hint
 
 ### !end-challenge
-
-## Takeaways
-
-1. The `this` keyword is used to make OOP more ergonomic
-1. The JavaScript interpreter
-
-## Questions
-
-Write an implementation of the `bind` method using `call` or `apply`.

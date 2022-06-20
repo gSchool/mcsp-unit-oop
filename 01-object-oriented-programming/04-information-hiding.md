@@ -1,20 +1,18 @@
 # Getters and Setters
 
-### !callout
+### !callout-
 
-<details>
-  <summary>Learning Objectives</summary>
+### Learning Objectives
 
-  By the end of the lesson, you should be able to:
-  - Define information (data) hiding in the context of OOP.
-  - Explain the benefit of information hiding.
-  - Distinguish between an interface and an implementation.
-  - Be able to use getters and setters achieve information hiding in your factory functions.
-</details>
+By the end of the lesson, you should be able to:
+- Define information hiding in the context of OOP.
+- Explain the benefit of information hiding.
+- Distinguish between an interface and an implementation.
+- Use getters and setters achieve information hiding in your factory functions.
 
 ### !end-callout
 
-As we saw at the end of the last section, there are times we want to hide internal data from being accessed _or_ mutated from outside the object (e.g. the `powerUps` array). But what do we do when we want a property to be accessible but not mutable? This is where getters come in. A getter is special type of function defined on an object which allows read-only access to a property. Additionally, they allow you to be alerted when a property is accessed, in case some other type of work needs to be done in that case. Here's a simple example of a getter at work.
+As we saw at the end of the last section, there are times we want to hide internal data from being accessed _or_ mutated from outside the object (e.g. the `powerUps` array). But what do we do when we want a property to be accessible but not mutable? This is where getters come in. A getter is special type of function defined on an object which allows read-only access to a property. Additionally, they allow you to be alerted when a property is accessed, in case some other type of work needs to be done in that case. Here's a simple example of a getter at work:
 
 ```js
 let myName = "Jay";
@@ -29,9 +27,7 @@ obj.name = "Marcus";
 console.log(obj.name); // Jay
 ```
 
-A getter is defined with the `get` keyword and although it looks like a normal method, it is not invoked through the usual `()` syntax. It is actually invoked when you access a property normally with the dot syntax, as can be seen in the above example.
-
-On the flip side, if you want to allow a property to be mutable, you can use a setter. Here's an example of that:
+A getter is defined with the `get` keyword, and although it looks like a normal method, it is not invoked through the usual `()` syntax. It is actually invoked when you access a property normally with the dot syntax, as can be seen in the above example. On the flip side, if you want to allow a property to be mutable, you can use a setter. Here's an example of that:
 
 ```js
 let myName = "Jay";
@@ -49,7 +45,7 @@ obj.name = "Anjali";
 console.log(obj.name); // Anjali
 ```
 
-Now you may be asking yourself how a getter/setter pair is better than just defining a normal property. If you allow access and mutation of a property, why not just expose it on the object? Well, one added benefit of a getter/setter pair is that we have more control over how properties are set and accessed. What if we wanted to keep track of every time a property is accessed or perform validation before accepting a property mutation? With a normal property, there's no way for us to hook into access/mutation, but with a getter/setter pair, we can just add some additional logic to our getter/setter functions like so:
+Now you may be asking yourself how a getter/setter pair is better than just defining a normal property. If you allow access and mutation of a property, why not just expose it on the object directly? Well, one added benefit of a getter/setter pair is that we have more control over how properties are set and accessed. What if we wanted to keep track of every time a property is accessed or perform validation before accepting a property mutation? With a normal property, there's no way for us to hook into access/mutation, but with a getter/setter pair, we can just add some additional logic to our getter/setter functions like so:
 
 ```js
 let myName = "Jay";
@@ -174,15 +170,15 @@ console.log(player.newProp); // undefined
 
 ### !question
 
-Let's return to our `Printer` factory function challenge from a previous section and refactor it to achieve information hiding. Here were the original specifications:
+Let's return to our `Printer` factory function challenge from a previous section and refactor it to achieve information hiding. Here were the original specifications for the object returned from the factory function:
 
-Name: `Printer`
 Properties (Should be configurable via parameters):
-- `name` - `String` (the name of the printer, e.g. 'Canon WiFi.')
-- `sheetCount` - `Number` (The number of sheets in the printer. Defaults to zero if not provided.)
+- `name` - A `String` representing the name of the printer, e.g. 'Canon WiFi.
+- `sheetCount` - A `Number` representing the number of sheets in the printer. (Defaults to zero if not provided.)
+
 Methods:
-- `addSheets` - Takes a number of pages as a parameter and adds that number to the `sheetCount` property.
-- `printJob` - Takes two parameters (name: `String`, size: `Number`) as parameters, and prints a message to the console for each page in the job with the following format: `Printing [jobName] page [currentPage] of [pageCount]` and subtracts that number from the `paperCount` property. If the number of pages in the job exceeds `sheetCount`, throw an `Error` with a message of `Job failed: please refill paper tray!`.
+- `addSheets` - Takes number a parameter and adds that number to the `sheetCount` property.
+- `printJob` - Takes two parameters (name: `String`, size: `Number`) as parameters, and prints a message to the console for each page in the job following the format `Printing [jobName] - page [currentPage] of [pageCount]` and subtracts that number from the `sheetCount` property. If the number of pages in the job exceeds `sheetCount`, throw an `Error` with a message of `Job failed: please refill paper tray!`.
 
 Additionally, we're going to add two more constraints:
 
@@ -247,13 +243,13 @@ describe('Printer', () => {
     subject.printJob('Essay.docx', 3);
 
     const logCalls = logStub.getCalls();
-    expect(logCalls[0].args[0]).to.equal('Printing Essay.docx page 1 of 3');
-    expect(logCalls[1].args[0]).to.equal('Printing Essay.docx page 2 of 3');
-    expect(logCalls[2].args[0]).to.equal('Printing Essay.docx page 3 of 3');
+    expect(logCalls[0].args[0]).to.equal('Printing Essay.docx - page 1 of 3');
+    expect(logCalls[1].args[0]).to.equal('Printing Essay.docx - page 2 of 3');
+    expect(logCalls[2].args[0]).to.equal('Printing Essay.docx - page 3 of 3');
     logStub.restore();
   });
 
-  it('`.printJob` method subtracts the job size from `sheetCount` ', () => {
+  it('`.printJob` method subtracts the job size from `sheetCount`', () => {
     const subject = Printer("Canon Wifi", 50);
     const logStub = sinon.stub(console, "log").callsFake(() => {});
 

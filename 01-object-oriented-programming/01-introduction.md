@@ -1,15 +1,13 @@
 # Introduction to Object-Oriented Programming
 
-### !callout
+### !callout-
 
-<details>
-  <summary>Learning Objectives</summary>
+### Learning Objectives
 
-  By the end of the lesson, you should be able to:
-  - Explain the problem that OOP solves and how it can be used to model the real world.
-  - Be able to identify and specify state and behavior.
-  - Explain what a programming paradigm is and distinguish between code written in a proceedural and object-oriented style.
-</details>
+By the end of the lesson, you should be able to:
+- Explain the problem that OOP solves and how it can be used to model the real world.
+- Be able to identify and specify state and behavior.
+- Explain what a programming paradigm is and distinguish between code written in a proceedural and object-oriented style.
 
 ### !end-callout
 
@@ -83,7 +81,7 @@ In reality, most programs written in an OOP style still make use of procedural p
 
 * type: checkbox
 * id: 5cef4cd7-464e-4e0c-adb5-3371170d9b51
-* title: State and Behaviors
+* title: State and Behaviors 1
 
 ### !question
 
@@ -135,7 +133,7 @@ The state of an object consists of it's properties (in this case `firstName` and
 
 * type: checkbox
 * id: eaf9158f-77cc-4de8-8698-04c391337513
-* title: State and Behaviors
+* title: State and Behaviors 2
 
 ### !question
 

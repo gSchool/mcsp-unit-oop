@@ -1,15 +1,12 @@
 # Factory Functions
 
-### !callout
+### !callout-
 
-<details>
-  <summary>Learning Objectives</summary>
+### Learning Objectives
 
-  By the end of the lesson, you should be able to:
-  - Explain the purpose of using the `this` keyword in the context of OOP.
-  - Understand the how `this` is setup when calling a method of an object.
-  - Recognize and fix cases where `this` does not refer to the correct object.
-</details>
+By the end of the lesson, you should be able to:
+- Explain the purpose of a factory function.
+- Write a factory function from scratch.
 
 ### !end-callout
 
@@ -101,17 +98,15 @@ Much better! What we've done here is created a factory function. A factory funct
 
 ### !question
 
-Write a factory function with the following specifications:
-
-Name: `Printer`
+Write a factory function named `Printer` which returns an object with the following specifications:
 
 Properties (Should be configurable via parameters):
-- `name` - `String` (the name of the printer, e.g. 'Canon WiFi.')
-- `sheetCount` - `Number` (The number of sheets in the printer. Defaults to zero if not provided.)
+- `name` - A `String` representing the name of the printer, e.g. 'Canon WiFi.
+- `sheetCount` - A `Number` representing the number of sheets in the printer. (Defaults to zero if not provided.)
 
 Methods:
-- `addSheets` - Takes a number of pages as a parameter and adds that number to the `sheetCount` property.
-- `printJob` - Takes two parameters (name: `String`, size: `Number`) as parameters, and prints a message to the console for each page in the job with the following format: `Printing [jobName] page [currentPage] of [pageCount]` and subtracts that number from the `paperCount` property. If the number of pages in the job exceeds `sheetCount`, throw an `Error` with a message of `Job failed: please refill paper tray!`.
+- `addSheets` - Takes number a parameter and adds that number to the `sheetCount` property.
+- `printJob` - Takes two parameters (name: `String`, size: `Number`) as parameters, and prints a message to the console for each page in the job following the format `Printing [jobName] - page [currentPage] of [pageCount]` and subtracts that number from the `sheetCount` property. If the number of pages in the job exceeds `sheetCount`, throw an `Error` with a message of `Job failed: please refill paper tray!`.
 
 ### !end-question
 
@@ -147,13 +142,13 @@ describe('Printer', () => {
     subject.printJob('Essay.docx', 3);
 
     const logCalls = logStub.getCalls();
-    expect(logCalls[0].args[0]).to.equal('Printing Essay.docx page 1 of 3');
-    expect(logCalls[1].args[0]).to.equal('Printing Essay.docx page 2 of 3');
-    expect(logCalls[2].args[0]).to.equal('Printing Essay.docx page 3 of 3');
+    expect(logCalls[0].args[0]).to.equal('Printing Essay.docx - page 1 of 3');
+    expect(logCalls[1].args[0]).to.equal('Printing Essay.docx - page 2 of 3');
+    expect(logCalls[2].args[0]).to.equal('Printing Essay.docx - page 3 of 3');
     logStub.restore();
   });
 
-  it('`.printJob` method subtracts the job size from `sheetCount` ', () => {
+  it('`.printJob` method subtracts the job size from `sheetCount`', () => {
     const subject = Printer("Canon Wifi", 50);
     const logStub = sinon.stub(console, "log").callsFake(() => {});
 
@@ -189,7 +184,7 @@ player1.powerUps = null;
 player1.getStarPowerUp(); // TypeError: Cannot read properties of null (reading 'push')
 ```
 
-Because the `powerUps` property is exposed to the outside world, anyone can set it to whatever they want. In this case, we set it to `null` which then caused the `getStarPowerUp` to throw an error! You could say "the user of my object simply didn't use it correctly," but the error still originated in _your_ object, so maybe it's worth looking into a way to hide the internal detail of our objects from the outside.
+Because the `powerUps` property is exposed to the outside world, anyone can set it to whatever they want. In this case, we set it to `null` which then caused the `getStarPowerUp` to throw an error! If this happened in practice, you could say to yourself, "Well, the user of my object simply didn't use it correctly!" but the error still originated in _your_ object, so it's worth looking into a way to hide the internal detail of our objects from the outside.
 
 ```js
 const Player = (name, hp) => {
@@ -221,10 +216,10 @@ There we go!
 
 What we've achieved here is a level of information hiding. Information hiding is exactly what it sounds like: the process of hiding information (i.e. data) internal to the object from being read or modified from outside that object. In this example, we're hiding the `powerUps` property, because it's part of the internal implementation of our `Player` object. Users of `Player` objects don't need to know wether we store power-ups in an array, an object, or any other structure. In fact, they don't need to know about the `powerUps` property at all! They just need to be able to call the `getStarPowerUp` and `takeDamage` methods as the game progresses.
 
-Hiding internal details not only prevents strange errors like the one displayed above, but also makes your objects more flexible. For example, after implementing information hiding, if you wanted to change from storing power-ups in a `Set` instead of an array you can do so without fear, but in the previous example, you may have to be careful as other code may be relying on the fact that power-ups are stored in an array, and changing it to a `Set` would now constitute a breaking change.
+Hiding internal details not only prevents strange errors like the one displayed above, but also makes your objects more flexible. For example, after implementing information hiding, if you wanted to change to storing power-ups in a `Set` instead of an array, you can do so without fear, since consumers can't access that property directly, but in the previous example, you may have to be careful as other code may be relying on the fact that power-ups are stored in an array, and changing it to a `Set` would constitute a breaking change.
 
 Now, what about the `name` and `hp` properties? Should we allow those to be mutated from the outside? Probably not, but to properly prevent mutation while still allowing access requires an understanding of getters and setters, which is the topic of the next section, so hold tight.
 
 ## Conclusion
 
-When you need a fleet of similar objects, create a factory function which takes of creating instances for you. To hide implementation details, make use of closure variables which are inaccessible to the outside.
+When you need a fleet of similar objects, create a factory function which takes of creating instances for you. To hide implementation details, make use of [closure](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures) variables which are inaccessible to the outside.

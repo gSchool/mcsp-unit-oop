@@ -1,16 +1,14 @@
 # ES6 Classes
 
-### !callout
+### !callout-
 
-<details>
-  <summary>Learning Objectives</summary>
+### Learning Objectives
 
-  By the end of the lesson, you should be able to:
-  - Use ES6 class syntax to create classes.
-  - Explain the purpose of the constructor function.
-  - Create instances of classes with the `new` keyword.
-  - Understand the relationship between a class and an instance.
-</details>
+By the end of the lesson, you should be able to:
+- Use ES6 class syntax to create classes.
+- Explain the purpose of the constructor function.
+- Create instances of classes with the `new` keyword.
+- Understand the relationship between a class and an instance.
 
 ### !end-callout
 
@@ -43,7 +41,7 @@ console.log(car.pos); // 0
 
 ### Methods
 
-Next comes the method declarations. They are the behavior of your object. Compared to the factory function example, nothing has changed, except for the fact that you don't separate methods with commas the way you do inside an object definition.
+Next comes the method declarations. They are the behavior of your object and are shared across every instance of the class. Compared to the factory function example, nothing has changed, except for the fact that you don't separate methods with commas the way you do inside an object definition. In the context of a class, `this` refers to the instance of the class you are currently working with.
 
 ```js
 class Car {
@@ -60,9 +58,7 @@ class Car {
 
 ### Instance Fields
 
-Next up, there are instance fields. Fields are the state of your object. They are accessed/set using the `this` keyword and are created for every instance of a class. In our example, we have three instance fields: `name`, `hp`, and `powerUps`.
-
-Although not part of the original ES6 specification, later versions added a shorthand syntax for defining and initializing fields, which would allow us to write our `Car` constructor like so:
+Next up, there are instance fields. Fields are the state of your object. They are accessed/set using the `this` keyword and are unique across instances of a class. Although not part of the original ES6 specification, later versions added a shorthand syntax for defining and initializing fields, which would allow us to write our `Car` constructor like so:
 
 ```js
 class Car {
@@ -77,10 +73,24 @@ class Car {
 
 Additionally, we can use this same syntax to declare private fields by simply prepending a `#` onto the field name. Any property beginning with a `#` will only be accessible within the body of the class and will be inaccessible from the outside. Private fields are the way to achieve information hiding in the context of ES6 classes.
 
+```js
+class Car {
+  #pos = 0;
+
+  constructor(color, model) {
+    this.color = color;
+    this.model = model;
+  }
+}
+
+const car = new Car();
+console.log(car.#pos); // SyntaxError: Private field '#pos' must be declared in an enclosing class
+```
+
 <details>
 <summary>Private Instance Variables Gotcha</summary>
 
-Note that in order to use a private instance field, you must declare it with the shorthand syntax ahead of time, even if you don't give it a value immediately. If you get a message like: `SyntaxError: Private field '#color' must be declared in an enclosing class` it means you have tried to use a priavate instance field without declaring it first, as in the example below:
+Note that in order to use a private instance field, you must declare it with the shorthand syntax ahead of time, even if you don't give it a value immediately. If you get a message like: `SyntaxError: Private field '#name' must be declared in an enclosing class` it means you have tried to use a priavate instance field without declaring it first, as in the example below:
 
 ```js
 class Person {
@@ -104,26 +114,12 @@ class Person {
 
 </details>
 
-```js
-class Car {
-  #pos = 0;
-
-  constructor(color, model) {
-    this.color = color;
-    this.model = model;
-  }
-}
-
-const car = new Car();
-console.log(car.#pos); // SyntaxError: Private field '#pos' must be declared in an enclosing class
-```
-
 <details>
 <summary>Using New JavaScript Features Safely</summary>
 
 Make sure your target environment (e.g. node version and browser type/versions) supports newer JavaScript features before using them in production. In general, anything included in ES6 is safe to use across modern browsers and in node, but before using newer features (like private instance fields) you should refer to a chart like [caniuse](https://caniuse.com/?search=class%20fields) before using them in production.
 
-<details>
+</details>
 
 ### Static Fields
 
@@ -139,7 +135,7 @@ Note: You can declare private static fields by appending a `#` to the field name
 
 ## Factory-Function to ES6
 
-Now that we've covered the basics of ES6 classes, let's return to our factory-function example and convert it to an ES6 class.
+Now that we've covered the basics of ES6 classes, let's return to our Printer example and convert it to an ES6 class.
 
 _Factory Function_
 
@@ -192,4 +188,164 @@ class Player {
 }
 ```
 
-Nice! As you can see, ES6 classes aren't too terribly difficult to learn if you're already familiar with OOP concepts. It's just a matter of learning some new syntax and making some translation. However, there's one feature of ES6 classes that we omitted in this discussion: inheritence. Inheritence is a big concept, so we'll leave that for the next section.
+Nice! As you can see, ES6 classes aren't too terribly difficult to learn if you're already familiar with OOP concepts. It's just a matter of learning some new syntax and making some translations. However, there's one feature of ES6 classes that we omitted in this discussion: inheritence. Inheritence is a big concept, so we'll leave that for the next section.
+
+### !challenge
+
+* type: local-snippet
+* id: 341bae67-0199-4d48-b66d-833db023d01f
+* language: javascript
+* title: ES6 Classes 
+
+### !question
+
+Convert the following factory function into an ES6 class.
+
+```js
+const Printer = (name, sheetCount = 0) => {
+  return {
+    get name() {
+      return name;
+    },
+    get sheetCount() {
+      return sheetCount;
+    },
+    addSheets(numSheets) {
+      sheetCount += numSheets;
+    },
+    printJob(name, size) {
+      if(size > sheetCount) throw new Error("Job failed: please refill paper tray!");
+
+      for(let i = 1; i <= size; i++) {
+        console.log(`Printing ${name} page ${i} of ${size}`);
+      }
+      sheetCount -= size;
+    }
+  }
+};
+```
+
+### !end-question
+
+### !placeholder
+
+```js
+class Printer {
+  // Your code here.
+}
+```
+
+### !end-placeholder
+
+### !tests
+
+```js
+describe('Printer', () => {
+  it('`name` property is configurable via parameters', () => {
+    const subject = new Printer("Canon Wifi");
+    expect(subject.name).to.equal("Canon Wifi");
+  });
+
+  it('`sheetCount` property is configurable via parameters', () => {
+    const subject = new Printer("Canon Wifi", 45);
+    expect(subject.sheetCount).to.equal(45);
+  });
+
+  it('defaults `sheetCount` property to 0 if none provided', () => {
+    const subject = new Printer("Canon Wifi");
+    expect(subject.sheetCount).to.equal(0);
+  });
+
+  it('`.addSheets` method updates `sheetCount`', () => {
+    const subject = new Printer("Canon Wifi", 20);
+    subject.addSheets(15);
+    expect(subject.sheetCount).to.equal(35);
+  });
+
+  it('`.printJob` method prints a message for each page in the job ', () => {
+    const subject = new Printer("Canon Wifi", 5);
+    const logStub = sinon.stub(console, "log").callsFake(() => {});
+
+    subject.printJob('Essay.docx', 3);
+
+    const logCalls = logStub.getCalls();
+    expect(logCalls[0].args[0]).to.equal('Printing Essay.docx - page 1 of 3');
+    expect(logCalls[1].args[0]).to.equal('Printing Essay.docx - page 2 of 3');
+    expect(logCalls[2].args[0]).to.equal('Printing Essay.docx - page 3 of 3');
+    logStub.restore();
+  });
+
+  it('`.printJob` method subtracts the job size from `sheetCount`', () => {
+    const subject = new Printer("Canon Wifi", 50);
+    const logStub = sinon.stub(console, "log").callsFake(() => {});
+
+    subject.printJob('Term Paper.docx', 25);
+    expect(subject.sheetCount).to.equal(25);
+
+    logStub.restore();
+  });
+
+  it('`.printJob` method throws an error if the job size exceeds the `sheetCount`', () => {
+    const subject = new Printer("Canon Wifi", 4);
+    const logStub = sinon.stub(console, "log").callsFake(() => {});
+
+    expect(() => subject.printJob('Court Proceedings.pdf', 10)).to.throw('Job failed: please refill paper tray!');
+
+    logStub.restore();
+  });
+
+  it('`sheetCount` property is read-only', () => {
+    const subject = Printer("Canon Wifi", 4);
+    expect(() => subject.sheetCount = 20).to.throw(TypeError);
+    expect(subject.sheetCount).to.equal(4);
+  });
+
+  it('`name` property is read-only', () => {
+    const subject = Printer("Canon Wifi", 4);
+    expect(() => subject.name = "Epson Wifi").to.throw(TypeError);
+    expect(subject.name).to.equal("Canon Wifi");
+  });
+});
+```
+
+### !end-tests
+
+### !explanation
+
+```js
+class Printer {
+  #name;
+  #sheetCount;
+
+  constructor(name, sheetCount) {
+    this.#name = name;
+    this.#sheetCount = sheetCount;
+  }
+
+  get name() {
+    return this.#name;
+  }
+
+  get sheetCount() {
+    return this.#sheetCount;
+  }
+
+  addSheets(numSheets) {
+    this.#sheetCount += numSheets;
+  }
+
+  printJob(name, size) {
+    if(size > this.#sheetCount) throw new Error("Job failed: please refill paper tray!");
+
+    for(let i = 1; i <= size; i++) {
+      console.log(`Printing ${name} page ${i} of ${size}`);
+    }
+
+    this.#sheetCount -= size;
+  }
+}
+```
+
+### !end-explanation
+
+### !end-challenge
