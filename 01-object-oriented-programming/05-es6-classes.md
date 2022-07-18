@@ -5,6 +5,7 @@
 ### Learning Objectives
 
 By the end of the lesson, you should be able to:
+
 - Use ES6 class syntax to create classes.
 - Explain the purpose of the constructor function.
 - Create instances of classes with the `new` keyword.
@@ -127,7 +128,7 @@ Although not as common, sometimes you may want to store some data on a class its
 
 ```js
 class Math {
-  static PI = 3.1459; //...
+  static PI = 3.1459; // ...
 }
 ```
 
@@ -135,7 +136,7 @@ Note: You can declare private static fields by appending a `#` to the field name
 
 ## Factory-Function to ES6
 
-Now that we've covered the basics of ES6 classes, let's return to our Printer example and convert it to an ES6 class.
+Now that we've covered the basics of ES6 classes, let's return to our `Player` example and convert it to an ES6 class.
 
 _Factory Function_
 
@@ -188,14 +189,12 @@ class Player {
 }
 ```
 
-Nice! As you can see, ES6 classes aren't too terribly difficult to learn if you're already familiar with OOP concepts. It's just a matter of learning some new syntax and making some translations. However, there's one feature of ES6 classes that we omitted in this discussion: inheritence. Inheritence is a big concept, so we'll leave that for the next section.
-
 ### !challenge
 
-* type: local-snippet
+* type: code-snippet
 * id: 341bae67-0199-4d48-b66d-833db023d01f
 * language: javascript
-* title: ES6 Classes 
+* title: ES6 Classes
 
 ### !question
 
@@ -214,14 +213,15 @@ const Printer = (name, sheetCount = 0) => {
       sheetCount += numSheets;
     },
     printJob(name, size) {
-      if(size > sheetCount) throw new Error("Job failed: please refill paper tray!");
+      if (size > sheetCount)
+        throw new Error("Job failed: please refill paper tray!");
 
-      for(let i = 1; i <= size; i++) {
+      for (let i = 1; i <= size; i++) {
         console.log(`Printing ${name} page ${i} of ${size}`);
       }
       sheetCount -= size;
-    }
-  }
+    },
+  };
 };
 ```
 
@@ -240,69 +240,75 @@ class Printer {
 ### !tests
 
 ```js
-describe('Printer', () => {
-  it('`name` property is configurable via parameters', () => {
+describe("Printer", () => {
+  it("`name` property is configurable via parameters", () => {
     const subject = new Printer("Canon Wifi");
     expect(subject.name).to.equal("Canon Wifi");
   });
 
-  it('`sheetCount` property is configurable via parameters', () => {
+  it("`sheetCount` property is configurable via parameters", () => {
     const subject = new Printer("Canon Wifi", 45);
     expect(subject.sheetCount).to.equal(45);
   });
 
-  it('defaults `sheetCount` property to 0 if none provided', () => {
+  it("defaults `sheetCount` property to 0 if none provided", () => {
     const subject = new Printer("Canon Wifi");
     expect(subject.sheetCount).to.equal(0);
   });
 
-  it('`.addSheets` method updates `sheetCount`', () => {
+  it("`.addSheets` method updates `sheetCount`", () => {
     const subject = new Printer("Canon Wifi", 20);
     subject.addSheets(15);
     expect(subject.sheetCount).to.equal(35);
   });
 
-  it('`.printJob` method prints a message for each page in the job ', () => {
+  it("`.printJob` method prints a message for each page in the job ", () => {
     const subject = new Printer("Canon Wifi", 5);
     const logStub = sinon.stub(console, "log").callsFake(() => {});
 
-    subject.printJob('Essay.docx', 3);
+    subject.printJob("Essay.docx", 3);
 
     const logCalls = logStub.getCalls();
-    expect(logCalls[0].args[0]).to.equal('Printing Essay.docx - page 1 of 3');
-    expect(logCalls[1].args[0]).to.equal('Printing Essay.docx - page 2 of 3');
-    expect(logCalls[2].args[0]).to.equal('Printing Essay.docx - page 3 of 3');
+    expect(logCalls[0].args[0]).to.equal("Printing Essay.docx - page 1 of 3");
+    expect(logCalls[1].args[0]).to.equal("Printing Essay.docx - page 2 of 3");
+    expect(logCalls[2].args[0]).to.equal("Printing Essay.docx - page 3 of 3");
     logStub.restore();
   });
 
-  it('`.printJob` method subtracts the job size from `sheetCount`', () => {
+  it("`.printJob` method subtracts the job size from `sheetCount`", () => {
     const subject = new Printer("Canon Wifi", 50);
     const logStub = sinon.stub(console, "log").callsFake(() => {});
 
-    subject.printJob('Term Paper.docx', 25);
+    subject.printJob("Term Paper.docx", 25);
     expect(subject.sheetCount).to.equal(25);
 
     logStub.restore();
   });
 
-  it('`.printJob` method throws an error if the job size exceeds the `sheetCount`', () => {
+  it("`.printJob` method throws an error if the job size exceeds the `sheetCount`", () => {
     const subject = new Printer("Canon Wifi", 4);
     const logStub = sinon.stub(console, "log").callsFake(() => {});
 
-    expect(() => subject.printJob('Court Proceedings.pdf', 10)).to.throw('Job failed: please refill paper tray!');
+    expect(() => subject.printJob("Court Proceedings.pdf", 10)).to.throw(
+      "Job failed: please refill paper tray!"
+    );
 
     logStub.restore();
   });
 
-  it('`sheetCount` property is read-only', () => {
+  it("`sheetCount` property is read-only", () => {
     const subject = Printer("Canon Wifi", 4);
-    expect(() => subject.sheetCount = 20).to.throw(TypeError);
+    expect(() => {
+      subject.sheetCount = 20;
+    }).to.throw(TypeError);
     expect(subject.sheetCount).to.equal(4);
   });
 
-  it('`name` property is read-only', () => {
+  it("`name` property is read-only", () => {
     const subject = Printer("Canon Wifi", 4);
-    expect(() => subject.name = "Epson Wifi").to.throw(TypeError);
+    expect(() => {
+      subject.name = "Epson Wifi";
+    }).to.throw(TypeError);
     expect(subject.name).to.equal("Canon Wifi");
   });
 });
@@ -335,9 +341,10 @@ class Printer {
   }
 
   printJob(name, size) {
-    if(size > this.#sheetCount) throw new Error("Job failed: please refill paper tray!");
+    if (size > this.#sheetCount)
+      throw new Error("Job failed: please refill paper tray!");
 
-    for(let i = 1; i <= size; i++) {
+    for (let i = 1; i <= size; i++) {
       console.log(`Printing ${name} page ${i} of ${size}`);
     }
 
@@ -349,3 +356,9 @@ class Printer {
 ### !end-explanation
 
 ### !end-challenge
+
+Nice! As you can see, ES6 classes aren't too terribly difficult to learn if you're already familiar with OOP concepts. It's just a matter of learning some new syntax and making some translations. However, there's one feature of ES6 classes that we omitted in this discussion: inheritence. Inheritence is a big concept, so we'll leave that for the next section.
+
+## Conclusion
+
+ES6 class syntax was added to JavaScript to formalize certain OOP patterns and make them easier to use in JavaScript, but all the OOP concepts such as encapsulation and information hiding still apply.

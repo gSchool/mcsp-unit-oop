@@ -5,6 +5,7 @@
 ### Learning Objectives
 
 By the end of the lesson, you should be able to:
+
 - Explain the purpose of a factory function.
 - Write a factory function from scratch.
 
@@ -101,68 +102,80 @@ Much better! What we've done here is created a factory function. A factory funct
 Write a factory function named `Printer` which returns an object with the following specifications:
 
 Properties (Should be configurable via parameters):
+
 - `name` - A `String` representing the name of the printer, e.g. 'Canon WiFi.
 - `sheetCount` - A `Number` representing the number of sheets in the printer. (Defaults to zero if not provided.)
 
 Methods:
+
 - `addSheets` - Takes number a parameter and adds that number to the `sheetCount` property.
 - `printJob` - Takes two parameters (name: `String`, size: `Number`) as parameters, and prints a message to the console for each page in the job following the format `Printing [jobName] - page [currentPage] of [pageCount]` and subtracts that number from the `sheetCount` property. If the number of pages in the job exceeds `sheetCount`, throw an `Error` with a message of `Job failed: please refill paper tray!`.
 
 ### !end-question
 
+### !placeholder
+
+```js
+const Printer = () => {};
+```
+
+### !end-placeholder
+
 ### !tests
 
 ```js
-describe('Printer', () => {
-  it('`name` property is configurable via parameters', () => {
+describe("Printer", () => {
+  it("`name` property is configurable via parameters", () => {
     const subject = Printer("Canon Wifi");
     expect(subject.name).to.equal("Canon Wifi");
   });
 
-  it('`sheetCount` property is configurable via parameters', () => {
+  it("`sheetCount` property is configurable via parameters", () => {
     const subject = Printer("Canon Wifi", 45);
     expect(subject.sheetCount).to.equal(45);
   });
 
-  it('defaults `sheetCount` property to 0 if none provided', () => {
+  it("defaults `sheetCount` property to 0 if none provided", () => {
     const subject = Printer("Canon Wifi");
     expect(subject.sheetCount).to.equal(0);
   });
 
-  it('`.addSheets` method updates `sheetCount`', () => {
+  it("`.addSheets` method updates `sheetCount`", () => {
     const subject = Printer("Canon Wifi", 20);
     subject.addSheets(15);
     expect(subject.sheetCount).to.equal(35);
   });
 
-  it('`.printJob` method prints a message for each page in the job ', () => {
+  it("`.printJob` method prints a message for each page in the job ", () => {
     const subject = Printer("Canon Wifi", 5);
     const logStub = sinon.stub(console, "log").callsFake(() => {});
 
-    subject.printJob('Essay.docx', 3);
+    subject.printJob("Essay.docx", 3);
 
     const logCalls = logStub.getCalls();
-    expect(logCalls[0].args[0]).to.equal('Printing Essay.docx - page 1 of 3');
-    expect(logCalls[1].args[0]).to.equal('Printing Essay.docx - page 2 of 3');
-    expect(logCalls[2].args[0]).to.equal('Printing Essay.docx - page 3 of 3');
+    expect(logCalls[0].args[0]).to.equal("Printing Essay.docx - page 1 of 3");
+    expect(logCalls[1].args[0]).to.equal("Printing Essay.docx - page 2 of 3");
+    expect(logCalls[2].args[0]).to.equal("Printing Essay.docx - page 3 of 3");
     logStub.restore();
   });
 
-  it('`.printJob` method subtracts the job size from `sheetCount`', () => {
+  it("`.printJob` method subtracts the job size from `sheetCount`", () => {
     const subject = Printer("Canon Wifi", 50);
     const logStub = sinon.stub(console, "log").callsFake(() => {});
 
-    subject.printJob('Term Paper.docx', 25);
+    subject.printJob("Term Paper.docx", 25);
     expect(subject.sheetCount).to.equal(25);
 
     logStub.restore();
   });
 
-  it('`.printJob` method throws an error if the job size exceeds the `sheetCount`', () => {
+  it("`.printJob` method throws an error if the job size exceeds the `sheetCount`", () => {
     const subject = Printer("Canon Wifi", 4);
     const logStub = sinon.stub(console, "log").callsFake(() => {});
 
-    expect(() => subject.printJob('Court Proceedings.pdf', 10)).to.throw('Job failed: please refill paper tray!');
+    expect(() => subject.printJob("Court Proceedings.pdf", 10)).to.throw(
+      "Job failed: please refill paper tray!"
+    );
 
     logStub.restore();
   });

@@ -6,7 +6,7 @@
 
 By the end of the lesson, you should be able to:
 - Explain the purpose of using the `this` keyword in the context of OOP.
-- Understand the how `this` is setup when calling a method of an object.
+- Understand how `this` is setup when calling a method of an object.
 - Recognize and fix cases where `this` does not refer to the correct object.
 
 ### !end-callout
@@ -33,7 +33,7 @@ player.takeDamage();
 console.log(player.hp); // 2
 ```
 
-Notice that we use the `this` keyword in the `getStarPowerUp` and `takeDamage` methods. At it's most basic level, the `this` keyword is an implicit parameter passed to object methods which refers to the object instance in which a method is contained. The JavaScript interpreter sets the value of `this` by looking at what came before the `.` in the method call. To understand why this is useful, let's compare a procedural example with an object-oriented one.
+Notice that we use the `this` keyword in the `getStarPowerUp` and `takeDamage` methods. At it's most basic level, the `this` keyword is an implicit parameter passed to object methods which refers to the object instance in which a method is contained. The JavaScript interpreter sets the value of `this` by looking at what came before the dot in the method call. To understand why this is useful, let's compare a procedural example with an object-oriented one.
 
 _Procedural_
 
@@ -189,7 +189,7 @@ person.printBio(); // Shigeru Miyamoto, age: 69
 
 In most cases, this implicit parameter passing works fine, but there are times when it doesn't work the way you expect. To demonstrate this, let's assume that rather than calling the `getStarPowerUp` method immediately, you may want to queue it up to happen at a later time using `setTimeout`. Our first approach may look something like this: `setTimeout(player.getStarPowerUp, 1000)`. However, when we run that code, we get: `TypeError: Cannot read properties of undefined (reading 'push')`. Take some time to consider what might be happening and then continue on.
 
-If we put a `console.log(this)` inside the `getStarPowerUp` method, we see that it is set to a `Timeout` object, and not the `player` object like we expected. What's going on!? Well, if you remember, we said that the JavaScript interpreter figures out how to set the `this` keyword by looking at the context in which it was called, namely what object preceeded the `.`. So when you call `player.getStarPowerUp()`, it sets `this` inside that method to the object which preceeded it (i.e. `player`). However, in the `setTimeout` example, we are not calling the method directly, but rather _extracting_ the function from the player object, so by the time it is executed, the interpreter no longer has any context. As far as the interpreter is concerned, it's dealing with a plain old function. We can demonstrate this more simply with the following code:
+If we put a `console.log(this)` inside the `getStarPowerUp` method, we see that it is set to a `Timeout` object, and not the `player` object like we expected. What's going on!? Well, if you remember, we said that the JavaScript interpreter figures out how to set the `this` keyword by looking at the context in which it was called, namely the object which preceeded the dot. So when you call `player.getStarPowerUp()`, it sets `this` inside the `getStarPowerUp` method to the `player` object. However, in the `setTimeout` example, we are not calling the method directly, but rather _extracting_ the function from the player object, so by the time it is executed, the interpreter no longer has any context. As far as the interpreter is concerned, it's dealing with a plain old function. We can demonstrate this more simply with the following code:
 
 ```js
 player.getStarPowerUp(); // Works fine
@@ -252,7 +252,7 @@ This pattern has fallen out of favor with the advent of es6 classes (which we'll
 
 ### !challenge
 
-* type: code-snippet
+* type: local-snippet
 * id: 7e6d2900-32d0-4fde-824a-a27292901576
 * language: javascript
 * title: Bind, Call and Apply

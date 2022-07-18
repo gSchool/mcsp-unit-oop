@@ -90,7 +90,7 @@ const Player = (name, hp) => {
 };
 ```
 
-We've already hidden some information by moving the `powerUps` property to a closure variable, but what about the `name` and `age` properties? Should we hide those as well? The answer is...it depends. The `name` property should certainly be readable from the outside, as we're not doing anything else with it, but probably not writable. As for the `hp` property, do you want users of your object to be able to read the `hp` property directly, or just alert them when `hp` goes to zero? Although there's no clear answer to that question (it depends on the application) one thing that's certain is we that don't want to give arbitrary write access to this property and instead only allow it to be updated in pre-defined ways (e.g. `takeDamage` or `getMushroom`).
+We've already hidden some information by moving the `powerUps` property to a closure variable, but what about the `name` and `hp` properties? Should we hide those as well? The answer is...it depends. The `name` property should certainly be readable from the outside, as we're not doing anything else with it, but probably not writable. As for the `hp` property, do you want users of your object to be able to read the `hp` property directly, or just alert them when `hp` goes to zero? Although there's no clear answer to that question (it depends on the application) one thing that's certain is we that don't want to give arbitrary write access to this property and instead only allow it to be updated in pre-defined ways (e.g. `takeDamage` or `getMushroom`).
 
 For our example, let's say that we don't want to expose the `hp` property at all, and only expose the read-only `name` property. To do the latter, we can make use of a getter.
 

@@ -30,6 +30,3 @@ Standards:
   - Type: Lesson
     Path: /01-object-oriented-programming/06-inheritence-and-the-prototype-chain.md
     UID: bbe087c1d38b3c3ce10a33dfe337f4a9
-  - Type: Lesson
-    Path: /01-object-oriented-programming/todo.md
-    UID: b4d79a248073e2eac71f5becd7f7dded
