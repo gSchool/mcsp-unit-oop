@@ -124,6 +124,8 @@ const Printer = () => {};
 ### !tests
 
 ```js
+const sinon = require('sinon');
+
 describe("Printer", () => {
   it("`name` property is configurable via parameters", () => {
     const subject = Printer("Canon Wifi");
@@ -148,36 +150,39 @@ describe("Printer", () => {
 
   it("`.printJob` method prints a message for each page in the job ", () => {
     const subject = Printer("Canon Wifi", 5);
-    const logStub = sinon.stub(console, "log").callsFake(() => {});
+    const logStub = sinon.stub(console, "log");
 
     subject.printJob("Essay.docx", 3);
+    logStub.restore();
 
     const logCalls = logStub.getCalls();
     expect(logCalls[0].args[0]).to.equal("Printing Essay.docx - page 1 of 3");
     expect(logCalls[1].args[0]).to.equal("Printing Essay.docx - page 2 of 3");
     expect(logCalls[2].args[0]).to.equal("Printing Essay.docx - page 3 of 3");
-    logStub.restore();
   });
 
   it("`.printJob` method subtracts the job size from `sheetCount`", () => {
     const subject = Printer("Canon Wifi", 50);
-    const logStub = sinon.stub(console, "log").callsFake(() => {});
+    const logStub = sinon.stub(console, "log");
 
     subject.printJob("Term Paper.docx", 25);
-    expect(subject.sheetCount).to.equal(25);
-
     logStub.restore();
+    expect(subject.sheetCount).to.equal(25);
   });
 
   it("`.printJob` method throws an error if the job size exceeds the `sheetCount`", () => {
     const subject = Printer("Canon Wifi", 4);
-    const logStub = sinon.stub(console, "log").callsFake(() => {});
+    const logStub = sinon.stub(console, "log");
 
-    expect(() => subject.printJob("Court Proceedings.pdf", 10)).to.throw(
-      "Job failed: please refill paper tray!"
-    );
-
-    logStub.restore();
+    try {
+      expect(() => subject.printJob("Court Proceedings.pdf", 10)).to.throw(
+        "Job failed: please refill paper tray!"
+      );
+      logStub.restore();
+    } catch(err) {
+      logStub.restore();
+      throw err;
+    }
   });
 });
 ```

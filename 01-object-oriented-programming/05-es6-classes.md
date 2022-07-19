@@ -191,7 +191,7 @@ class Player {
 
 ### !challenge
 
-* type: code-snippet
+* type: local-snippet
 * id: 341bae67-0199-4d48-b66d-833db023d01f
 * language: javascript
 * title: ES6 Classes
@@ -240,6 +240,22 @@ class Printer {
 ### !tests
 
 ```js
+// Simple stubbing implementation since local-snippets do not come with sinon installed.
+const stub = (object, method) => {
+  const calls = [];
+  const oldFn = object[method];
+  object[method] = (...args) => {
+    calls.push({ args });
+  };
+
+  return {
+    restore: () => {
+      object[method] = oldFn;
+    },
+    getCalls: () => calls
+  };
+}
+
 describe("Printer", () => {
   it("`name` property is configurable via parameters", () => {
     const subject = new Printer("Canon Wifi");
@@ -264,51 +280,51 @@ describe("Printer", () => {
 
   it("`.printJob` method prints a message for each page in the job ", () => {
     const subject = new Printer("Canon Wifi", 5);
-    const logStub = sinon.stub(console, "log").callsFake(() => {});
+    const logStub = stub(console, "log");
 
     subject.printJob("Essay.docx", 3);
+    logStub.restore();
 
     const logCalls = logStub.getCalls();
     expect(logCalls[0].args[0]).to.equal("Printing Essay.docx - page 1 of 3");
     expect(logCalls[1].args[0]).to.equal("Printing Essay.docx - page 2 of 3");
     expect(logCalls[2].args[0]).to.equal("Printing Essay.docx - page 3 of 3");
-    logStub.restore();
   });
 
   it("`.printJob` method subtracts the job size from `sheetCount`", () => {
     const subject = new Printer("Canon Wifi", 50);
-    const logStub = sinon.stub(console, "log").callsFake(() => {});
+    const logStub = stub(console, "log");
 
     subject.printJob("Term Paper.docx", 25);
-    expect(subject.sheetCount).to.equal(25);
-
     logStub.restore();
+    expect(subject.sheetCount).to.equal(25);
   });
 
   it("`.printJob` method throws an error if the job size exceeds the `sheetCount`", () => {
     const subject = new Printer("Canon Wifi", 4);
-    const logStub = sinon.stub(console, "log").callsFake(() => {});
+    const logStub = stub(console, "log");
 
-    expect(() => subject.printJob("Court Proceedings.pdf", 10)).to.throw(
-      "Job failed: please refill paper tray!"
-    );
+    try {
+      expect(() => subject.printJob("Court Proceedings.pdf", 10)).to.throw(
+        "Job failed: please refill paper tray!"
+      );
+      logStub.restore();
+    } catch(err) {
+      logStub.restore();
+      throw err;
+    }
 
-    logStub.restore();
   });
 
   it("`sheetCount` property is read-only", () => {
-    const subject = Printer("Canon Wifi", 4);
-    expect(() => {
-      subject.sheetCount = 20;
-    }).to.throw(TypeError);
+    const subject = new Printer("Canon Wifi", 4);
+    subject.sheetCount = 20;
     expect(subject.sheetCount).to.equal(4);
   });
 
   it("`name` property is read-only", () => {
-    const subject = Printer("Canon Wifi", 4);
-    expect(() => {
-      subject.name = "Epson Wifi";
-    }).to.throw(TypeError);
+    const subject = new Printer("Canon Wifi", 4);
+    subject.name = "Epson Wifi";
     expect(subject.name).to.equal("Canon Wifi");
   });
 });
@@ -345,7 +361,7 @@ class Printer {
       throw new Error("Job failed: please refill paper tray!");
 
     for (let i = 1; i <= size; i++) {
-      console.log(`Printing ${name} page ${i} of ${size}`);
+      console.log(`Printing ${name} - page ${i} of ${size}`);
     }
 
     this.#sheetCount -= size;
