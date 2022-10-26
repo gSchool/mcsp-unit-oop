@@ -12,7 +12,25 @@ By the end of the lesson, you should be able to:
 
 ### !end-callout
 
-As we saw at the end of the last section, there are times we want to hide internal data from being accessed _or_ mutated from outside the object (e.g. the `powerUps` array). But what do we do when we want a property to be accessible but not mutable? This is where getters come in. A getter is special type of function defined on an object which allows read-only access to a property. Additionally, they allow you to be alerted when a property is accessed, in case some other type of work needs to be done in that case. Here's a simple example of a getter at work:
+
+<details>
+<summary>Key Terms</summary>
+
+- Getters
+- Read-only access
+- `get` keyword
+- Setters
+- Read-only access
+- `get` keyword
+- Interface
+- Implementation
+- Mutable vs. Immutable
+
+
+</details>
+
+
+As we saw at the end of the last section, there are times we want to hide internal data from being accessed _or_ mutated from outside of the object, recall the `powerUps` array in the previous lesson. But what do we do when we want a property to be accessible but not *mutable*? This is where **getters** come in. A getter is special type of function defined on an object which allows read-only access to a property. Additionally, they allow you to be alerted when a property is accessed, in case some other type of work needs to be done in that case. Here's a simple example of a getter at work:
 
 ```js
 let myName = "Jay";
@@ -45,29 +63,41 @@ obj.name = "Anjali";
 console.log(obj.name); // Anjali
 ```
 
-Now you may be asking yourself how a getter/setter pair is better than just defining a normal property. If you allow access and mutation of a property, why not just expose it on the object directly? Well, one added benefit of a getter/setter pair is that we have more control over how properties are set and accessed. What if we wanted to keep track of every time a property is accessed or perform validation before accepting a property mutation? With a normal property, there's no way for us to hook into access/mutation, but with a getter/setter pair, we can just add some additional logic to our getter/setter functions like so:
+<details>
+<summary>Ok, how is using `get` or `set` better than just working with a property directly?</summary>
+
+If you allow access and mutation of a property, why not just expose it on the object directly?
+
+Well, one added benefit of a getter/setter pair is that we have more control over how properties are set and accessed.
+
+What if we wanted to keep track of every time a property is accessed or perform validation before accepting a property mutation?
+
+With a normal property, there's no way for us to hook into access/mutation, but with a getter/setter pair, we can just add some additional logic to our getter/setter functions like so:
 
 ```js
-let myName = "Jay";
-let timesAccessed = 0;
+let myName = 'Jay'
+let timesAccessed = 0
 const obj = {
-  get name() {
-    timesAccessed++;
-    return myName;
+  get name () {
+    timesAccessed++
+    return myName
   },
-  set name(name) {
-    if (typeof name !== "string") {
-      throw new Error("Invalid name given");
+  set name (name) {
+    if (typeof name !== 'string') {
+      throw new Error('Invalid name given')
     }
-    myName = name;
-  },
-};
+    myName = name
+  }
+}
 
-obj.name;
-obj.name;
-console.log(timesAccessed); // 2
-obj.name = 4; // Error: Invalid name given
+obj.name
+obj.name
+console.log(timesAccessed) // 2
+obj.name = 4 // Error: Invalid name given
 ```
+
+</details>
+
 
 Now that we have a basic understanding of getters and setters, let's return to the example we ended with in the previous section.
 

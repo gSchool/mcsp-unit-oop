@@ -15,9 +15,22 @@ By the end of the lesson, you should be able to:
 
 ### !end-callout
 
-In the last section, we introduced ES6 classes and their various components (the constructor, methods, and fields). However, we omitted one important feature: inheritence and the `extends` keyword. Before diving into the code, let's briefly explore the topic of inheritence in the context of OOP generally.
+<details>
+<summary>Key Terms</summary>
 
-Along with encapsulation, inheritence is one of the major pillars of OOP. It refers to the ability of some classes to adopt state and behaviors from other classes, in order to facilitate code re-use and to model hierachical relationships. For example, if you were building a game where you could drive multiple types of vehicles (e.g. cars, boats, and bikes) you might start by creating a class for each type of vehicle.
+- ES6
+- Inheritance
+- JavaScript Keyword `extends`
+- Code Re-Use
+- JavaScript Keyword `super`
+- Prototype Chain
+
+</details>
+
+
+In the last section, we introduced **ES6** classes and their various components (the constructor, methods, and fields). However, we omitted one important feature: inheritence and the `extends` keyword. Before diving into the code, let's briefly explore the topic of inheritence in the context of OOP generally.
+
+Along with encapsulation, inheritence is one of the major pillars of OOP. It refers to the ability of some classes to adopt state and behaviors from other classes, in order to facilitate **code re-use** and to model hierachical relationships. For example, if you were building a game where you could drive multiple types of vehicles (e.g. cars, boats, and bikes) you might start by creating a class for each type of vehicle.
 
 ```js
 class Car {

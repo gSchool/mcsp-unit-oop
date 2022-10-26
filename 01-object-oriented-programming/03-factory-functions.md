@@ -11,7 +11,21 @@ By the end of the lesson, you should be able to:
 
 ### !end-callout
 
-In a previous section, we introduced the object-oriented programming paradigm and showed some examples comparing it to procedural programming. Let's take another look at that example now:
+In a previous section, we introduced the object-oriented programming paradigm and showed some examples comparing it to procedural programming. 
+
+<details>
+<summary>Key Terms</summary>
+
+- Factory Function
+- Constructor Function
+- Instances
+- Information Hiding / Internal Implementation
+- Mutate
+
+</details>
+
+
+Let's take another look at that example now:
 
 ```js
 const player = {
@@ -33,7 +47,7 @@ player.takeDamage();
 console.log(player.hp); // 2
 ```
 
-This example demonstrated the concept of object-orientation well enough, but what would happen if we wanted to deal with more than one player object? What might that code look like?
+This example demonstrates a single object with state and behavior well enough, but what would happen if we wanted to deal with more than one player object? What might that code look like?
 
 ```js
 const player1 = {
@@ -88,7 +102,7 @@ const player1 = Player("Mario", 1);
 const player2 = Player("Luigi", 1);
 ```
 
-Much better! What we've done here is created a factory function. A factory function is simply a function which returns an object. We give them a special name because they approximate a constructor function, which is just a special name given to function which creates many instances of a particular type of object. The methods stayed exactly the same, but the `name` and `hp` properties needed to be configurable, so we handled that with regular function parameters.
+Much better! What we've done here is created a factory function. A factory function is simply a function which returns an object. We give them a special name because they approximate a **constructor function**, which is just a special name given to function which creates many instances of a particular type of object. The methods stayed exactly the same, but the `name` and `hp` properties needed to be configurable, so we handled that with regular function parameters.
 
 ### !challenge
 
@@ -232,11 +246,11 @@ console.log(player.hp); // 2
 
 There we go!
 
-What we've achieved here is a level of information hiding. Information hiding is exactly what it sounds like: the process of hiding information (i.e. data) internal to the object from being read or modified from outside that object. In this example, we're hiding the `powerUps` property, because it's part of the internal implementation of our `Player` object. Users of `Player` objects don't need to know wether we store power-ups in an array, an object, or any other structure. In fact, they don't need to know about the `powerUps` property at all! They just need to be able to call the `getStarPowerUp` and `takeDamage` methods as the game progresses.
+What we've achieved here is a level of information hiding. Information hiding is exactly what it sounds like: the process of hiding information (i.e. data) internal to the object from being read or modified from outside that object. In this example, we're hiding the `powerUps` property, because it's part of the **internal implementation** of our `Player` object. Users of `Player` objects don't need to know whether we store power-ups in an array, an object, or any other structure. In fact, they don't need to know about the `powerUps` property at all! They just need to be able to call the `getStarPowerUp` and `takeDamage` methods as the game progresses.
 
 Hiding internal details not only prevents strange errors like the one displayed above, but also makes your objects more flexible. For example, after implementing information hiding, if you wanted to change to storing power-ups in a `Set` instead of an array, you can do so without fear, since consumers can't access that property directly, but in the previous example, you may have to be careful as other code may be relying on the fact that power-ups are stored in an array, and changing it to a `Set` would constitute a breaking change.
 
-Now, what about the `name` and `hp` properties? Should we allow those to be mutated from the outside? Probably not, but to properly prevent mutation while still allowing access requires an understanding of getters and setters, which is the topic of the next section, so hold tight.
+Now, what about the `name` and `hp` properties? Should we allow those to be **mutated** from the outside? Probably not, but to properly prevent mutation while still allowing access requires an understanding of getters and setters, which is the topic of the next section, so hold tight.
 
 ## Conclusion
 

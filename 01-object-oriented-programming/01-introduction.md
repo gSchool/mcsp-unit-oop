@@ -11,19 +11,40 @@ By the end of the lesson, you should be able to:
 
 ### !end-callout
 
-In this section, we'll introduce the topic of object-oriented programming (aka OOP). It's a big topic! But the core concepts are simple, as we'll discover below. We'll start by going through the core concepts of object-oriented programming, discuss its benefits and drawbacks, and briefly discuss its history.
+In this section, we'll introduce the topic of object-oriented programming (aka OOP). 
+
+It's a big topic! But the core concepts are simple, as we'll discover below. 
+
+We'll start by going through the core concepts of object-oriented programming, discuss its benefits and drawbacks, and briefly discuss its history.
+
+<details>
+<summary>Key Terms</summary>
+
+ * Objects
+ * State
+ * Fields / Properties
+ * Behavior
+ * Methods
+ * Encapsulation
+ * Pillars of OOP
+ * Programming Paradigms
+ * Procedural Programming
+
+</details>
 
 ## Core Concepts
 
-The central idea of object-oriented programming is to package state and behaviors together into a singular entity called an object. The state comes in the form of fields or properties and the behaviors are typically called methods. The process of bundling state and behvaiors is known as encapsulation<sup id="1">[1](#f1)</sup> and is one of the pillars of OOP. One way to conceptualize this style of programming is to think of objects like cells in a biological system. Rather than each cell being able directly modify the internals of other cells, each cell encapsulates its internals inside a nucleus and other cells communicate with it by sending chemical messages. In this way, each cell can remain relatively simple and self-contained, but through collaboration with other cells, they compose a complex, self-correcting system which is greater than the sum of its parts. In fact, this is the guiding analogy used by the person who is known for developing OOP, Alan Kay, who had a background in biology before entering the field of computer science.
+The central idea of object-oriented programming is to package **state** and **behaviors** together into a singular entity called an **object**. The state comes in the form of **fields** or **properties** and the behaviors are typically called methods. 
+
+The process of bundling state and behvaiors is known as **encapsulation**<sup id="1">[1](#f1)</sup> and is one of the **pillars of OOP**. One way to conceptualize this style of programming is to think of objects like cells in a biological system. Rather than each cell being able directly modify the internals of other cells, each cell encapsulates its internals inside a nucleus and other cells communicate with it by sending chemical messages. In this way, each cell can remain relatively simple and self-contained, but through collaboration with other cells, they compose a complex, self-correcting system which is greater than the sum of its parts. In fact, this is the guiding analogy used by the person who is known for developing OOP, Alan Kay, who had a background in biology before entering the field of computer science.
 
 ## Programming Paradigms
 
-It's important to note that object-oriented programming is not specific to JavaScript or any other language. Rather, it is a programming paradigm, or high-level way of designing and structuring programs. Other types of programming paradigms include: functional, logic, event-driven, and procedural, among many others. Most paradigms are not mutually exclusive and in fact JavaScript has support for progrmaming in a functional, event-driven, procedural, and object-oriented paradigm!
+It's important to note that object-oriented programming is not specific to JavaScript or any other language. Rather, it is a **programming paradigm**, or high-level way of designing and structuring programs. Other types of programming paradigms include: functional, logic, event-driven, and procedural, among many others. Most paradigms are not mutually exclusive and in fact JavaScript has support for progrmaming in a functional, event-driven, procedural, and object-oriented paradigm!
 
 ## Procedural vs OOP
 
-Up until this point, we've mainly been programming in the procedural paradigm. In this paradigm, state and behaviors are separate, and our program works by passing global state through functions which modify that state. Let's take a look at a simple procedural program and compare it to the same program written in an object-oriented style.
+Up until this point, we've mainly been programming in the **procedural paradigm**. In this paradigm, state and behaviors are separate, and our program works by passing global state through functions which modify that state. Let's take a look at a simple procedural program and compare it to the same program written in an object-oriented style.
 
 ```js
 const player = {
@@ -69,7 +90,7 @@ player.takeDamage();
 console.log(player.hp); // 2
 ```
 
-All we did between these two code snippets is moved the behaviors (functions) into the object as methods. At first glance, this may seem like a superficial change, but let's think about the consequences of this change, not only in the code itself, but also in how we model problems and design solutions.
+All we did between these two code snippets is moved the behaviors (functions) into the object as **methods**. At first glance, this may seem like a superficial change, but let's think about the consequences of this change, not only in the code itself, but also in how we model problems and design solutions.
 
 The first thing you may notice is that, in the oop example, the methods take no parameters. The reason for this is that since they are contained in an object, we can access and modify the encapsulated state (i.e. properties) through the `this` keyword. We'll go more in depth as to how `this` works, but for now, think of it as an implicit parameter which is passed to object methods which refers to the object in which those methods are defined. The way `this` gets set is by looking at whatever comes before the dot when invoking the method. In this case, both `getStarPowerUp` and `takeDamage` are invoked on the `player` object, so that is what `this` will refer to inside those methods.
 
