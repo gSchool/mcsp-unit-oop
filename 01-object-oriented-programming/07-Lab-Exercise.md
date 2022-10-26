@@ -17,8 +17,8 @@ Once you have accomplished all of the learning objectives in the previous lesson
 <!--'id' is required, string, must be unique within a branch-->
 <!--'title' is required, string, used when displaying results-->
 
-- type: Shape Creator
-- id: bbdda5a0-fa36-409e-bc2a-dcfa10ef0fc6
+- type: project
+- id: ea9a7a44-ac6b-422c-9284-772faa7ec0b3
 - title: OOP Lab
 
 <!--'question' is required, markdown, the question to be answered-->
