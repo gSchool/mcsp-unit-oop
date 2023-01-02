@@ -8,7 +8,7 @@ By the end of the lesson, you should be able to:
 - Define information hiding in the context of OOP.
 - Explain the benefit of information hiding.
 - Distinguish between an interface and an implementation.
-- Use getters and setters achieve information hiding in your factory functions.
+- Use getters and setters to achieve information hiding in your factory functions.
 
 ### !end-callout
 
@@ -203,11 +203,11 @@ console.log(player.newProp); // undefined
 Let's return to our `Printer` factory function challenge from a previous section and refactor it to achieve information hiding. Here were the original specifications for the object returned from the factory function:
 
 Properties (Should be configurable via parameters):
-- `name` - A `String` representing the name of the printer, e.g. 'Canon WiFi.
+- `name` - A `String` representing the name of the printer, e.g. 'Canon WiFi.'
 - `sheetCount` - A `Number` representing the number of sheets in the printer. (Defaults to zero if not provided.)
 
 Methods:
-- `addSheets` - Takes number a parameter and adds that number to the `sheetCount` property.
+- `addSheets` - Takes a `Number` and adds that number to the `sheetCount` property.
 - `printJob` - Takes two parameters (name: `String`, size: `Number`) as parameters, and prints a message to the console for each page in the job following the format `Printing [jobName] - page [currentPage] of [pageCount]` and subtracts that number from the `sheetCount` property. If the number of pages in the job exceeds `sheetCount`, throw an `Error` with a message of `Job failed: please refill paper tray!`.
 
 Additionally, we're going to add two more constraints:

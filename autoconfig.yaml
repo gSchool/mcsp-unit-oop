@@ -33,3 +33,6 @@ Standards:
   - Type: Lesson
     Path: /01-object-oriented-programming/07-Lab-Exercise.md
     UID: bbd5b9f0f47a6fe1c69f398b5a58ded2
+  - Type: Lesson
+    Path: /01-object-oriented-programming/07-es6-modules.md
+    UID: 5d92db8578227353338710ce5d2e0519

@@ -42,7 +42,7 @@ player.takeDamage();
 console.log(player.hp); // 2
 ```
 
-Notice that we use the `this` keyword in the `getStarPowerUp` and `takeDamage` methods. At it's most basic level, the `this` keyword is an implicit parameter passed to object methods which refers to the object instance in which a method is contained. The JavaScript interpreter sets the value of `this` by looking at what came before the dot in the method call. To understand why this is useful, let's compare a procedural example with an object-oriented one.
+Notice that we use the `this` keyword in the `getStarPowerUp` and `takeDamage` methods. At its most basic level, the `this` keyword is an implicit parameter passed to object methods which refers to the object instance in which a method is contained. The JavaScript interpreter sets the value of `this` by looking at what came before the dot in the method call. To understand why this is useful, let's compare a procedural example with an object-oriented one.
 
 _Procedural_
 

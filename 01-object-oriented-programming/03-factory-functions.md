@@ -41,10 +41,6 @@ const player = {
     }
   },
 };
-
-player.getStarPowerUp();
-player.takeDamage();
-console.log(player.hp); // 2
 ```
 
 This example demonstrates a single object with state and behavior well enough, but what would happen if we wanted to deal with more than one player object? What might that code look like?
@@ -122,7 +118,7 @@ Properties (Should be configurable via parameters):
 
 Methods:
 
-- `addSheets` - Takes number a parameter and adds that number to the `sheetCount` property.
+- `addSheets` - Takes a `Number` and adds that number to the `sheetCount` property.
 - `printJob` - Takes two parameters (name: `String`, size: `Number`) as parameters, and prints a message to the console for each page in the job following the format `Printing [jobName] - page [currentPage] of [pageCount]` and subtracts that number from the `sheetCount` property. If the number of pages in the job exceeds `sheetCount`, throw an `Error` with a message of `Job failed: please refill paper tray!`.
 
 ### !end-question

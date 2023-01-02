@@ -251,7 +251,7 @@ describe('inspect', () => {
 
   it("is sorted", () => {
     const propertyNames = inspect({ a: 1, z: 26 });
-    expect(propertyNames).to.deep.eq(propertyNames.sort());
+    expect(propertyNames).to.eql([...propertyNames].sort());
   })
 
   it("excludes deprecated properties (i.e. those matching the pattern /__.*__/)", () => {

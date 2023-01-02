@@ -373,7 +373,7 @@ class Printer {
 
 ### !end-challenge
 
-Nice! As you can see, ES6 classes aren't too terribly difficult to learn if you're already familiar with OOP concepts. It's just a matter of learning some new syntax and making some translations. However, there's one feature of ES6 classes that we omitted in this discussion: inheritence. Inheritence is a big concept, so we'll leave that for the next section.
+As you can see, ES6 classes aren't too terribly difficult to learn if you're already familiar with OOP concepts. It's just a matter of learning some new syntax and making some translations. However, there's one feature of ES6 classes that we omitted in this discussion: inheritence. Inheritence is a big concept, so we'll leave that for the next section.
 
 ## Conclusion
 
