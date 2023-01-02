@@ -288,7 +288,7 @@ Break the problem down into parts. First just try to return all properties defin
 
 #### !hint
 
-Use `Object.getOwnPropertyNames` to get a list of properties defined on an object (but not on its property chain).
+Use [`Object.getOwnPropertyNames`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames) to get a list of properties defined on an object (but not on its property chain).
 
 #### !end-hint
 

@@ -6,17 +6,18 @@
 
 By the end of the lesson, you should be able to:
 
-- Import and export default exports.
-- Import and export named exports.
-- Rename named exports when importing them.
-- Understand the difference between default and named exports.
 - Use ES6 modules in Node and the browser.
+- Explain what module system is.
+- Understand the difference between default and named exports.
+- Understand the major differences between CommonJS and ES6 module systems.
 
 ### !end-callout
 
 ## Introduction
 
-When programming in JavaScript (or any language for that matter), you eventually encounter the need to split your application into many files or use an existing library to accomplish some common task (e.g. validating user input, working with dates, etc.). To facilitate this, languages implement what is called a _module system_. Although the syntax varies from language to language, the idea is to allow certain files to expose bits of code which can then be imported other places. Node.js ships with it's own module system (known as CommonJS), which uses the `module.exports` and `require` keywords.
+When programming in JavaScript (or any language for that matter), you eventually encounter the need to split your application into many files. To facilitate this, languages implement what is called a _module system_. Although the syntax varies from language to language, the idea is the same: to allow code contained in one file to be used by code in another.
+
+Node.js ships with its own module system (known as CommonJS), which uses the `module.exports` and `require` keywords. Here's an example of that in use:
 
 ```js
 // file1.js
@@ -30,11 +31,11 @@ module.exports = add;
 const add = require("./file1.js");
 ```
 
-Although this works fine, this system is not part of the JavaScript language specification, and it does not work in the browser. However, with the release of ES6, JavaScript now has a standard module system which can work in Node.js and browsers! This system is known as the ES6 module system, and will be the default for most new code, so let's dig in to how it works.
+Although this works fine, this system is not part of JavaScript's language specification, and it does not work in the browser. However, with the release of ES6, JavaScript now has a standard module system which works in Node.js and browsers! This system is called ES6 modules or "ESM" and will be the default for most new code, so let's dig in to how it works.
 
 ## Named Exports
 
-First off, what is a module? Well, in the context of ES6, a module is simply a file containing JS code. By default, everything declared inside a module is local to that module. But if you want to reference something in that module from another, you can use the `export` keyword. Let's pause to take a look at an example:
+First off, what is a module in ESM? Well, a module is simply a file containing JS code. By default, everything declared inside a module is local to that module. But if you want to reference something in that module from another, you can use the `export` keyword. Let's pause to take a look at an example:
 
 ```js
 // math.js
@@ -45,7 +46,7 @@ export const subtract = (a, b) => a - b;
 <details>
 <summary>Alternative Form</summary>
 
-In the previous example, we could have also declared functions and exported them later like so, (although this pattern is less common):
+In the previous example, we could have also declared functions and exported them later like so:
 
 ```js
 // math.js
@@ -57,14 +58,56 @@ export { add, subtract };
 
 </details>
 
-What we've done here is exposed two functions, `add` and `subtract` from `math.js` so that it can be referenced in another module (i.e. file). We do so using the `import` keyword:
+What we've done here is exposed two functions, `add` and `subtract`, from `math.js` so that it can be referenced in another module (i.e. file). We do so using the `import` keyword:
 
 ```js
 // main.js
 import { add, subtract } from "./math.js";
 ```
 
-Notice the curly-brace syntax and how it's analogous to the destructuring syntax when we want to extract particular keys from an object. In this case, we're using it when we want to extract particular exports from a file. Although this syntax follows slightly different rules from destructuring, as we'll see shortly, it can be a useful analogy for understanding the semantics of that syntax.
+The curly-brace syntax denotes destructing, only instead of extracting particular values from an object, we're extracting particular exports from a file. Although this syntax follows slightly different rules from destructuring, as we'll see shortly, it can be a useful analogy for understanding the semantics of that syntax.
+
+### !challenge
+
+* type: multiple-choice
+* id: 43ed52bb-425b-4f66-82c6-a604008a6a14
+* title: ES6 Named Imports
+
+#### !question
+
+Given the following code written in a file named "util.js," which of the following is a valid way to import the `flip` function? (Assume you are in the same directory as `util.js`.)
+
+```js
+// util.js
+export const flip = (pair) => [pair[1], pair[0]];
+```
+
+#### !end-question
+
+#### !options
+
+a|
+```js
+import flip from "./util.js";
+```
+b|
+```js
+import { flip } from "./util.js";
+```
+c|
+```js
+import flip from "./util";
+```
+
+#### !end-options
+
+#### !answer
+
+b|
+
+#### !end-answer
+
+### !end-challenge
 
 ## Default Exports
 
@@ -119,7 +162,7 @@ import Person from "./person.js";
 import MyPerson from "./person.js";
 ```
 
-It's important to note that a module can expose named and default exports at the same time. The syntax for that would look like the following:
+It's important to note that a module can expose named exports and a default export at the same time. The syntax for that would look like the following:
 
 ```js
 // math.js
@@ -128,16 +171,116 @@ export const subtract = (a, b) => a - b;
 export default 3.145;
 ```
 
+And importing:
+
 ```js
 // main.js
 import PI, { add, subtract } from "./math.js";
 ```
 
-So, that's the basics of ES6 modules, but there are a few other forms to be aware of.
+### !challenge
+
+* type: checkbox
+* id: 40a2aaa8-91a8-46be-8cd4-576ab3d746ac
+* title: ES6 Default Imports
+
+#### !question
+
+Given the following code, in `./dog.js`, which of the following are valid ways to import the `Dog` class?
+
+```js
+class Dog {
+  constructor(breed) {
+    this.breed = breed;
+  }
+
+  speak() {
+    console.log(`The ${this.breed} says "Woof!"`);
+  }
+}
+
+export default Dog;
+```
+
+#### !end-question
+
+#### !options
+
+a|
+```js
+import Dog from "./dog.js";
+```
+b|
+```js
+import * as Dog from "./dog.js";
+```
+c|
+```js
+import Doggy from "./dog.js";
+```
+d|
+```js
+import { Dog } from "./dog.js";
+```
+
+#### !end-options
+
+#### !answer
+
+a|
+c|
+
+#### !end-answer
+
+### !end-challenge
+
+### !challenge
+
+* type: checkbox
+* id: c388ddd0-833b-4706-a134-702f2b4e1fa1
+* title: ES6 Default Imports
+
+#### !question
+
+Given the following code, how would you export the `add` and `subtract` functions as named exports?
+
+```js
+const add = (a, b) => a + b;
+const subtract = (a, b) => a - b;
+```
+
+#### !end-question
+
+#### !options
+
+a|
+```js
+export { add, subtract };
+```
+b|
+```js
+export default { add, subtract };
+```
+c|
+```js
+export const add = (a, b) => a + b;
+export const subtract = (a, b) => a - b;
+```
+
+#### !end-options
+
+#### !answer
+
+a|
+c|
+
+#### !end-answer
+
+### !end-challenge
 
 ## Renaming Imports/Exports
 
-Occasionally when writing code, you may encounter a situation where two modules export something with the same name. How do you handle this situation?
+Occasionally when writing code, you may encounter a situation where two modules export something with the same name.
 
 ```js
 import { parse } from "html-parser";
@@ -145,7 +288,7 @@ import { parse } from "xml-parser";
 // Uh oh, naming conflict!
 ```
 
-When importing named exports, you can rename them with the `as` keyword.
+To solve this, you can use the `as` keyword.
 
 ```js
 import { parse as parseHTML } from "html-parser";
@@ -155,11 +298,11 @@ parseHTML(/* HTML here */);
 parseXML(/* XML here */);
 ```
 
-Whatever follows the `as` keyword will be the name given to the value exported with the name preceeding the `as` keyword. You can also rename exports with the same syntax, although this is not as common.
+You can also rename exports with the same syntax, although this is not as common.
 
 ## Aggregating Modules (e.g. Namespace Imports)
 
-Occasionally, we might want to import all named exports from a module as a single object (this is also occasionally necessary for backwards compatability with node modules which use `module.exports`).
+Occasionally, we might want to import all named exports from a module as a single object (this is also sometimes necessary for backwards compatability with node modules which use the CommonJS module format).
 
 ```js
 // math.js
@@ -176,6 +319,8 @@ math.subtract(5, 4);
 ```
 
 ## Differences Between CommonJS and ES6 Modules
+
+As mentioned before, Node developed its own module format (CommonJS) before one was added to the JavaScript specification. Node has great support for ES6 modules now, and the vast majority of new code uses ES6, but there are still some differences between to two to be aware of.
 
 <details>
 <summary>1. `require` can be used anywhere in your code, while `import`s must be at the top-level.</summary>
@@ -237,19 +382,19 @@ With the Node module system, you often end up with a directory structure which l
     - index.js
 ```
 
-where `index.js` would re-export all exports from the files in the `util` directory. In CommonJS, ff you want to import something from the `util` directory, you can do it by just specifying the directory in the module specifier.
+where `index.js` would re-export all exports from the files in the `util` directory. In CommonJS, if you want to import something from the `util` directory, you can do it by just specifying the directory in the module specifier.
 
 ```js
 // This shorthand is interpreted as require("./util/index.js")
 const { add, addDate } = require("./util");
-
-// Error!
-import { add, addDate } from "./util";
 ```
 
-Since ES6 modules always require you to fully specify the file path, including the extension, you have to include `index.js` if you want to use this directory index pattern.
+However, since ES6 modules always require you to fully specify the file path, including the extension, you have to include `index.js` if you want to use this directory index pattern.
 
 ```js
+// Error!
+import { add, addDate } from "./util";
+
 // Works.
 import { add, addDate } from "./util/index.js";
 ```
@@ -273,138 +418,17 @@ You can name files with a `.cjs` extension to denote them as CommonJS modules.
 
 ### In the Browser
 
-To use ES6 modules, all you need to do is add a [`type`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script#attr-type) attribute to the `script` tag used to load your JS files. They will now be treated as ES6 modules, so you can `import`/`export` things inside of them. Note that you can only use relative imports to import things which are hosted on the same host as the originally-loaded ES6 module, and you can't `import` things from node_modules the way you can in Node. Importing npm packages is typically solved using a module bundler, but that's a topic for another day...
+To use ES6 modules, all you need to do is add a [`type`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script#attr-type) attribute to the `script` tag used to load your JS files. They will now be treated as ES6 modules, so you can `import`/`export` things inside of them. Note that you can only use URLs and relative paths to import things which are hosted on the same host as the originally-loaded ES6 module, and you can't `import` things from node_modules the way you can in Node. Importing npm packages is typically solved by using a module bundler, but that's a topic for another day...
 
 ## Conclusion
 
 - ES6 modules (ESM) is the de-facto mechanism for sharing code between files (i.e. modules) in JavaScript.
-- You can export 
+- CommonJS (`require`/`export`) is the mechanism Node.js used to accomplish the same thing, but will be subsumed by ESM in the future.
+- You can export named and default exports from a module..
 - To use ESM in the browser, add `type="module"` to your `script` tags.
 - To use ESM in node, add `"type": "module"` to your `package.json` file.
-- CommonJS (`require`/`export`) is the mechanism Node.js used to accomplish the same thing, but will be subsumed by ESM in the future.
 
 ## Additional Reading
 
 1. [ES6 Modules in Depth](https://hacks.mozilla.org/2015/08/es6-in-depth-modules/)
 1. [Node ES6 Module Docs](https://nodejs.org/api/esm.html#resolution-algorithm)
-
-### !challenge
-
-* type: multiple-choice
-* id: 43ed52bb-425b-4f66-82c6-a604008a6a14
-* title: ES6 Named Imports
-
-#### !question
-
-Given the following file (`util.js`), which of the following is a valid way to import the `flip` function. (Assume you are in the same directory as `util.js`);.
-
-```js
-// util.js
-export const flip = (pair) => [pair[1], pair[0]];
-```
-
-#### !end-question
-
-#### !options
-
-a| `import flip from "./util.js";`
-b| `import { flip } from "./util.js";`
-c| `import flip from "./util";`
-
-#### !end-options
-
-#### !answer
-
-b|
-
-#### !end-answer
-
-### !end-challenge
-
-### !challenge
-
-* type: checkbox
-* id: 40a2aaa8-91a8-46be-8cd4-576ab3d746ac
-* title: ES6 Default Imports
-
-#### !question
-
-Given the following code, in `./dog.js`, which of the following are valid ways to import the `Dog` class?
-
-```js
-class Dog {
-  constructor(breed) {
-    this.breed = breed;
-  }
-
-  speak() {
-    console.log(`The ${this.breed} says "Woof!"`);
-  }
-}
-
-export default Dog;
-```
-
-#### !end-question
-
-#### !options
-
-a| `import Dog from "./dog.js";`
-b| `import * as Dog from "./dog.js";`
-c| `import Doggy from "./dog.js";`
-d| `import { Dog } from "./dog.js";`
-
-#### !end-options
-
-#### !answer
-
-a|
-c|
-
-#### !end-answer
-
-### !end-challenge
-
-### !challenge
-
-* type: checkbox
-* id: c388ddd0-833b-4706-a134-702f2b4e1fa1
-* title: ES6 Default Imports
-
-#### !question
-
-Given the following code, how would you export the `add` and `subtract` functions as named exports?
-
-```js
-const add = (a, b) => a + b;
-const subtract = (a, b) => a - b;
-```
-
-#### !end-question
-
-#### !options
-
-a|
-```js
-export { add, subtract };
-```
-b|
-```js
-export default { add, subtract };
-```
-c|
-```js
-export const add = (a, b) => a + b;
-export const subtract = (a, b) => a - b;
-```
-
-#### !end-options
-
-#### !answer
-
-a|
-c|
-
-#### !end-answer
-
-### !end-challenge
