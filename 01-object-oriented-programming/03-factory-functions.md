@@ -11,8 +11,6 @@ By the end of the lesson, you should be able to:
 
 ### !end-callout
 
-In a previous section, we introduced the object-oriented programming paradigm and showed some examples comparing it to procedural programming. 
-
 <details>
 <summary>Key Terms</summary>
 
@@ -24,6 +22,7 @@ In a previous section, we introduced the object-oriented programming paradigm an
 
 </details>
 
+In a previous section, we introduced the object-oriented programming paradigm and showed some examples comparing it to procedural programming. 
 
 Let's take another look at that example now:
 
@@ -162,8 +161,13 @@ describe("Printer", () => {
     const subject = Printer("Canon Wifi", 5);
     const logStub = sinon.stub(console, "log");
 
-    subject.printJob("Essay.docx", 3);
-    logStub.restore();
+    try {
+      subject.printJob("Essay.docx", 3);
+    } catch(err) {
+      throw err;
+    } finally {
+      logStub.restore();
+    }
 
     const logCalls = logStub.getCalls();
     expect(logCalls[0].args[0]).to.equal("Printing Essay.docx - page 1 of 3");
@@ -175,8 +179,13 @@ describe("Printer", () => {
     const subject = Printer("Canon Wifi", 50);
     const logStub = sinon.stub(console, "log");
 
-    subject.printJob("Term Paper.docx", 25);
-    logStub.restore();
+    try {
+      subject.printJob("Term Paper.docx", 25);
+    } catch(err) {
+      throw err;
+    } finally {
+      logStub.restore();
+    }
     expect(subject.sheetCount).to.equal(25);
   });
 

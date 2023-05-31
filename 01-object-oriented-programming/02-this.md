@@ -11,14 +11,14 @@ By the end of the lesson, you should be able to:
 
 ### !end-callout
 
-In the previous section, we used the `this` keyword in our methods but never dove into how it works. 
-
 <details>
 <summary>Key Terms</summary>
 
  * `this` Keyword
 
 </details>
+
+In the previous section, we used the `this` keyword in our methods but never dove into how it works. 
 
 In this section, we'll explore the `this` keyword in depth. Let's start by taking a look at one of the first examples we showed to demonstrate object-oriented programming.
 

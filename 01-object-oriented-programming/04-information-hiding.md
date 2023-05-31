@@ -12,7 +12,6 @@ By the end of the lesson, you should be able to:
 
 ### !end-callout
 
-
 <details>
 <summary>Key Terms</summary>
 
@@ -26,9 +25,7 @@ By the end of the lesson, you should be able to:
 - Implementation
 - Mutable vs. Immutable
 
-
 </details>
-
 
 As we saw at the end of the last section, there are times we want to hide internal data from being accessed _or_ mutated from outside of the object, recall the `powerUps` array in the previous lesson. But what do we do when we want a property to be accessible but not *mutable*? This is where **getters** come in. A getter is special type of function defined on an object which allows read-only access to a property. Additionally, they allow you to be alerted when a property is accessed, in case some other type of work needs to be done in that case. Here's a simple example of a getter at work:
 

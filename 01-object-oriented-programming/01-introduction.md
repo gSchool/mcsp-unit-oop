@@ -11,12 +11,6 @@ By the end of the lesson, you should be able to:
 
 ### !end-callout
 
-In this section, we'll introduce the topic of object-oriented programming (aka OOP). 
-
-It's a big topic! But the core concepts are simple, as we'll discover below. 
-
-We'll start by going through the core concepts of object-oriented programming, discuss its benefits and drawbacks, and briefly discuss its history.
-
 <details>
 <summary>Key Terms</summary>
 
@@ -31,6 +25,12 @@ We'll start by going through the core concepts of object-oriented programming, d
  * Procedural Programming
 
 </details>
+
+In this section, we'll introduce the topic of object-oriented programming (aka OOP). 
+
+It's a big topic! But the core concepts are simple, as we'll discover below. 
+
+We'll start by going through the core concepts of object-oriented programming, discuss its benefits and drawbacks, and briefly discuss its history.
 
 ## Core Concepts
 
