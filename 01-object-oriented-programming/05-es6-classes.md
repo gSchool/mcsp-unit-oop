@@ -282,8 +282,13 @@ describe("Printer", () => {
     const subject = new Printer("Canon Wifi", 5);
     const logStub = stub(console, "log");
 
-    subject.printJob("Essay.docx", 3);
-    logStub.restore();
+    try {
+      subject.printJob("Essay.docx", 3);
+    } catch(err) {
+      throw err;
+    } finally {
+      logStub.restore();
+    }
 
     const logCalls = logStub.getCalls();
     expect(logCalls[0].args[0]).to.equal("Printing Essay.docx - page 1 of 3");
@@ -295,8 +300,14 @@ describe("Printer", () => {
     const subject = new Printer("Canon Wifi", 50);
     const logStub = stub(console, "log");
 
-    subject.printJob("Term Paper.docx", 25);
-    logStub.restore();
+    try {
+      subject.printJob("Term Paper.docx", 25);
+    } catch(err) {
+      throw err;
+    } finally {
+      logStub.restore();
+    }
+
     expect(subject.sheetCount).to.equal(25);
   });
 
