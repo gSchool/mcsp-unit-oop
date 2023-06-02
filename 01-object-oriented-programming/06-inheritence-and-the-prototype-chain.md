@@ -230,8 +230,6 @@ const inspect = (obj) => {
 #### !tests
 
 ```js
-const OBJ_PROPS = Object.getOwnPropertyNames(Object.prototype);
-
 describe('inspect', () => {
   it("includes all properties inherited from the object's prototype chain", () => {
     const obj1 = { a: 1 };
@@ -250,7 +248,7 @@ describe('inspect', () => {
   })
 
   it("is sorted", () => {
-    const propertyNames = inspect({ a: 1, z: 26 });
+    const propertyNames = inspect({ z: 26, a: 1 });
     expect(propertyNames).to.eql([...propertyNames].sort());
   })
 
@@ -301,6 +299,42 @@ Use the regular expression `/__.*__/` to determine if a property name should be 
 #### !hint
 
 You can use a [`Set`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set) to easily remove duplicates from an array.
+
+#### !end-hint
+
+#### !hint
+
+Here are the tests.
+
+```js
+describe('inspect', () => {
+  it("includes all properties inherited from the object's prototype chain", () => {
+    const obj1 = { a: 1 };
+    const obj2 = Object.create(obj1);
+    obj2.b = 2;
+    const obj3 = Object.create(obj2);
+    obj3.c = 3;
+    const propertyNames = inspect(obj3);
+    expect(['a',  'b', 'c',].every(prop => propertyNames.includes(prop))).to.be.true;
+    expect(['constructor',  'hasOwnProperty', 'toString'].every(prop => propertyNames.includes(prop))).to.be.true;
+  });
+
+  it("does not contain duplicates", () => {
+    const propertyNames = inspect({ constructor: inspect });
+    expect(propertyNames.length).to.eq((new Set(propertyNames)).size);
+  })
+
+  it("is sorted", () => {
+    const propertyNames = inspect({ z: 26, a: 1 });
+    expect(propertyNames).to.eql([...propertyNames].sort());
+  })
+
+  it("excludes deprecated properties (i.e. those matching the pattern /__.*__/)", () => {
+    const propertyNames = inspect({});
+    expect(propertyNames.some(name => /__.*__/.test(name))).to.be.false;
+  });
+});
+```
 
 #### !end-hint
 
