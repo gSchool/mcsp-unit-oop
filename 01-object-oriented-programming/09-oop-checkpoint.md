@@ -205,7 +205,7 @@ Always
 
 ## !answer
 
-d. All of the above
+* c. State data and function behavior can be encapsulated together
 
 ## !end-answer
 
@@ -254,7 +254,7 @@ What are some of the reasons for using getter and setter methods in JavaScript?
 
 ## !question
 
-Can variables be made private to a class in JavaScript, and why would we want to make a variable in a class private? 
+Can variables be made private to a class in JavaScript, and why would we want to make a variable in a class hidden? 
 
 ## !end-question
 
