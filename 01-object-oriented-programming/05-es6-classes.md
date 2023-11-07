@@ -217,7 +217,7 @@ const Printer = (name, sheetCount = 0) => {
         throw new Error("Job failed: please refill paper tray!");
 
       for (let i = 1; i <= size; i++) {
-        console.log(`Printing ${name} page ${i} of ${size}`);
+        console.log(`Printing ${name} - page ${i} of ${size}`);
       }
       sheetCount -= size;
     },
