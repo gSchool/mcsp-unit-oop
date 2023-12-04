@@ -1,18 +1,4 @@
----
-Type: Checkpoint
-UID: e6c2cab1-6529-4161-b489-ab3024d81a10
-Autoscore: false
----
-
 # OOP Assessment
-
-### !callout-
-
-
-
-### !end-callout
-
-
 
 # !challenge
 
@@ -98,11 +84,11 @@ Which of the following is true about a child class in Javascript?
 
 ## !options
 
-* a. All the instance methods declared in the parent class must declare a specific implementation in the child class
+* a. All the instance methods declared in the parent class must be overwritten with a specific implementation in the child class
 * b. All methods in the parent class are available to the child class by default
 * c. Any of the methods in the parent class can be overridden in the child class
 * d. All child classes must declare a constructor function
-* e. The `super` keyword refers to the parent class’s method
+* e. The `super` keyword gives you access to the parent's constructor and instance methods
 
 ## !end-options
 
@@ -110,7 +96,7 @@ Which of the following is true about a child class in Javascript?
 
 * b. All methods in the parent class are available to the child class by default
 * c. Any of the methods in the parent class can be overridden in the child class
-* e. The `super` keyword refers to the parent class’s method
+* e. The `super` keyword gives you access to the parent's constructor and instance methods
 
 ## !end-answer
 
@@ -132,19 +118,17 @@ Which of the following correctly describe JavaScript class syntax?
 
 ## !options
 
-* a. It uses prototypes to handle inheritance when creating objects
-* b. It can be mixed with the prototype syntax
-* c. It must include a constructor function
-* d. It uses the `this` keyword to refer to an instance of the class
-* e. all of the above
+* a. It uses the prototype chain to handle inheritance when creating objects
+* b. It must include a constructor function
+* c. It uses the `this` keyword to refer to an instance of the class
+* d. all of the above
 
 ## !end-options
 
 ## !answer
 
-* a. It uses prototypes to handle inheritance when creating objects
-* b. It can be mixed with the prototype syntax
-* d. It uses the `this` keyword to refer to an instance of the class
+* a. It uses the prototype chain to handle inheritance when creating objects
+* c. It uses the `this` keyword to refer to an instance of the class
 
 ## !end-answer
 
@@ -160,7 +144,7 @@ Which of the following correctly describe JavaScript class syntax?
 
 ## !question
 
-If a child class override a method from a parent class, the function parameters should have the same number of parameters, with the same data types
+If a child class overrides a method from a parent class, the function should have the same number of parameters, with the same data types
 
 ## !end-question
 
