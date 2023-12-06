@@ -54,7 +54,7 @@ Which of the following features related to the Object Oriented Programming parad
 * b. encapsulation
 * c. interoperability
 * d. polymorphism
-* e. abstraction
+* e. inheritance
 
 ## !end-options
 
@@ -62,7 +62,7 @@ Which of the following features related to the Object Oriented Programming parad
 
 * b. encapsulation
 * d. polymorphism
-* e. abstraction
+* e. inheritance
 
 ## !end-answer
 
