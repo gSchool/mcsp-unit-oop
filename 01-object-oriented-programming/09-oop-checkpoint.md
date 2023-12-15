@@ -251,150 +251,280 @@ Write your answer here
 
 # !challenge
 
-* type: paragraph
+* type: code-snippet
+* language: javascript18
 * id: a236ff39-a637-465e-85e0-d3e79af09c13
-* language: javascript
 * title: Implementing Polymorphism
-* points: 10
-
+* points: 5
 
 ## !question
 
-Examine the Monster, FireMonster and WaterMonster classes provided
+Examine the `Monster`, `FireMonster` and `WaterMonster` classes provided:
 
 ```js
 class Monster {
+  constructor(name, attackPower, hp = 10) {
+    this.name = name;
+    this.hp = hp;
+    this.attackPower = attackPower;
+  }
 
-    static color = "red";
-
-    constructor(name, ability, hp=10){
-        this.name = name;
-        this.hp = hp;
-        this.attackTries = 3;
-        this.attackPower = 1;
-        this.ability = ability;
+  attack(enemy) {
+    if (!this.isAlive()) {
+      console.log(`${this.name} took too much damage to attack`);
+      return false;
     }
 
-    attack(enemy){
-        if (!this.isAlive()){
-            console.log(`${this.name} took too much damage to attack`);
-            return false;
-        }
-
-        if (this.attackTries > 0){
-            this.attackTries--;
-            console.log(`${this.name} attacks ${enemy.name} with the power ${this.ability} at level ${this.attackPower}`);
-            enemy.hp -= this.attackPower;
-            if (enemy.hp <= 0){
-                console.log(`${enemy.name} has died.`)
-            }
-            console.log(`${this.name} has ${this.attackTries} attacks left`);
-            return true;
-        } else {
-            console.log(`${this.name} is out of attacks`);
-            return false;
-        }
+    console.log(
+      `${this.name} attacks ${enemy.name} at level ${this.attackPower}`
+    );
+    enemy.hp -= this.attackPower;
+    if (enemy.hp <= 0) {
+      console.log(`${enemy.name} has died.`);
     }
+    return true;
+  }
 
-    chargePower(){
-        console.log(`${this.name} charges up to attack`);
-    }
+  chargePower() {
+    console.log(`${this.name} charges up to attack`);
+  }
 
-    heal(){
-        this.hp++;
-    }
+  heal() {
+    this.hp++;
+  }
 
-    isAlive(){
-        return (this.hp > 0) ? true : false;
-    }
-
-    static displayColor(){
-        console.log(`All monsters are ${Monster.color}!!!`);
-    }
+  isAlive() {
+    return this.hp > 0 ? true : false;
+  }
 }
-
 
 class FireMonster extends Monster {
-    constructor(name, firePower, hp=15){
-        super(name, "fire", hp); 
-        this.name = "Fiery-" + name;
-        this.attackPower = firePower;
-        this.temperature = 32;
-    }
+  constructor(name, firePower, hp = 15) {
+    super("Fiery-" + name, firePower, hp);
+    this.temperature = 32;
+  }
 
-    attack(enemy){
-       console.log(`And now you will burn from my fire at ${this.temperature} degrees!`);
-       if (this.temperature < 100){
-            super.attack(enemy); 
-       } else if (this.temperature < 200){
-            this.attackPower += 3;
-            super.attack(enemy)
-            this.attackPower -=3;
-       } else {
-            this.attackPower += 5;
-            super.attack(enemy);
-            this.attackPower -= 5;
-       } 
+  attack(enemy) {
+    console.log(
+      `And now you will burn from my fire at ${this.temperature} degrees!`
+    );
+    if (this.temperature < 100) {
+      super.attack(enemy);
+    } else if (this.temperature < 200) {
+      this.attackPower += 3;
+      super.attack(enemy);
+      this.attackPower -= 3;
+    } else {
+      this.attackPower += 5;
+      super.attack(enemy);
+      this.attackPower -= 5;
     }
+  }
 
-    chargePower(){
-        super.heal();
-        this.temperature *= 2;
-        console.log(`${this.name} took a magma bath and increased temperature to ${this.temperature} degrees!`);
-    }
+  chargePower() {
+    super.chargePower();
+    super.heal();
+    this.temperature *= 2;
+    console.log(
+      `${this.name} took a magma bath and increased temperature to ${this.temperature} degrees!`
+    );
+  }
 }
-
 
 class WaterMonster extends Monster {
-    constructor(name, waterPower, hp=20){
-        super(name, "water", hp); 
-        this.name = "Watery-" + name;
-        this.attackPower = waterPower;
-        this.waterBladderSize = 0;
-    }
+  constructor(name, waterPower, hp = 20) {
+    super("Watery-" + name, waterPower, hp);
+    this.waterBladderSize = 0;
+  }
 
-    attack(enemy){
-
-        if (this.waterBladderSize < 1){
-            super.attack(enemy);
-        } else {
-            console.log(`${this.name} will use their bladder to attack multiple times`);
-            for (let i = 0; i < this.waterBladderSize; i++){
-                super.attack(enemy);
-            }
-            this.waterBladderSize = 0;
-        }
-        console.log("And now you will be soaking wet!");
+  attack(enemy) {
+    if (this.waterBladderSize < 1) {
+      super.attack(enemy);
+    } else {
+      console.log(
+        `${this.name} will use their bladder to attack multiple times`
+      );
+      for (let i = 0; i < this.waterBladderSize; i++) {
+        super.attack(enemy);
+      }
+      this.waterBladderSize = 0;
     }
+    console.log("And now you will be soaking wet!");
+  }
 
-    chargePower(){
-        super.chargePower();
-        console.log(`Trying to pull in water...`);
-        this.waterBladderSize += Math.floor(Math.random()*5);
-        if (this.waterBladderSize > 5 ){
-            console.log(`${this.name} took in too much water`);
-            this.waterBladderSize = 0;
-        }
-        console.log(`${this.name} now has their bladder filled with ${this.waterBladderSize} L water.`);
+  chargePower() {
+    super.chargePower();
+    this.waterBladderSize += Math.floor(Math.random() * 5);
+    if (this.waterBladderSize > 5) {
+      console.log(`${this.name} took in too much water`);
+      this.waterBladderSize = 0;
     }
+    console.log(
+      `${this.name} now has their bladder filled with ${this.waterBladderSize} L water.`
+    );
+  }
 }
 ```
-Use the above classes to write a function `fight` that does the following:
-* Create 3 different FireMonster and 3 WaterMonster objects, and put them in an `enemies` array
-* Create a FireMonster and WaterMonster object
-* Use polymorphism to have the FireMonster and WaterMonster attack all the Monsters in the `enemies` array by invoking the `.chargePower` and `.attack` methods 
+
+Write a function `fight` which takes in two parameters:
+* `myMonster` - A monster instance.
+* `enemies` - An array of monster enemies to be attacked.
+
+This function should call `chargePower` on the given `myMonster` **once** and then have it attack every monster in the `enemies` array.
 
 ## !end-question
+
+### !setup
+
+```js
+class Monster {
+  constructor(name, attackPower, hp = 10) {
+    this.name = name;
+    this.hp = hp;
+    this.attackPower = attackPower;
+  }
+
+  attack(enemy) {
+    if (!this.isAlive()) {
+      console.log(`${this.name} took too much damage to attack`);
+      return false;
+    }
+
+    console.log(
+      `${this.name} attacks ${enemy.name} at level ${this.attackPower}`
+    );
+    enemy.hp -= this.attackPower;
+    if (enemy.hp <= 0) {
+      console.log(`${enemy.name} has died.`);
+    }
+    return true;
+  }
+
+  chargePower() {
+    console.log(`${this.name} charges up to attack`);
+  }
+
+  heal() {
+    this.hp++;
+  }
+
+  isAlive() {
+    return this.hp > 0 ? true : false;
+  }
+}
+
+class FireMonster extends Monster {
+  constructor(name, firePower, hp = 15) {
+    super("Fiery-" + name, firePower, hp);
+    this.temperature = 32;
+  }
+
+  attack(enemy) {
+    console.log(
+      `And now you will burn from my fire at ${this.temperature} degrees!`
+    );
+    if (this.temperature < 100) {
+      super.attack(enemy);
+    } else if (this.temperature < 200) {
+      this.attackPower += 3;
+      super.attack(enemy);
+      this.attackPower -= 3;
+    } else {
+      this.attackPower += 5;
+      super.attack(enemy);
+      this.attackPower -= 5;
+    }
+  }
+
+  chargePower() {
+    super.chargePower();
+    super.heal();
+    this.temperature *= 2;
+    console.log(
+      `${this.name} took a magma bath and increased temperature to ${this.temperature} degrees!`
+    );
+  }
+}
+
+class WaterMonster extends Monster {
+  constructor(name, waterPower, hp = 20) {
+    super("Watery-" + name, waterPower, hp);
+    this.waterBladderSize = 0;
+  }
+
+  attack(enemy) {
+    if (this.waterBladderSize < 1) {
+      super.attack(enemy);
+    } else {
+      console.log(
+        `${this.name} will use their bladder to attack multiple times`
+      );
+      for (let i = 0; i < this.waterBladderSize; i++) {
+        super.attack(enemy);
+      }
+      this.waterBladderSize = 0;
+    }
+    console.log("And now you will be soaking wet!");
+  }
+
+  chargePower() {
+    super.chargePower();
+    this.waterBladderSize += Math.floor(Math.random() * 5);
+    if (this.waterBladderSize > 5) {
+      console.log(`${this.name} took in too much water`);
+      this.waterBladderSize = 0;
+    }
+    console.log(
+      `${this.name} now has their bladder filled with ${this.waterBladderSize} L water.`
+    );
+  }
+}
+```
+
+### !end-setup
 
 #### !placeholder
 
 ```js
-function fight() {
-// Use the Monster classes to simulate a 2 x 6 battle by using polymorphism
-
+function fight(myMonster, enemies) {
 }
 ```
 
 #### !end-placeholder
+
+### !tests
+
+```js
+
+describe('fight', () => {
+  it("is a function", () => {
+    expect(fight, "should be a function").to.be.a('function');
+  });
+
+  it("calls 'chargePower' on 'myMonster'", () => {
+    const monster = new FireMonster("bowser", 20);
+    const { hp, temperature } = monster.hp;
+
+    fight(monster, []);
+
+    expect(monster.hp).to.be(startingHp + 1);
+    expect(monster.temperature).to.be(temperature * 2);
+  });
+
+  it("attacks every monster in the given 'enemies' array", () => {
+    const myMonster = new FireMonster("wizzrobe", 8);
+
+    const monster1 = new FireMonster("demon firesage", 4);
+    const monster2 = new WaterMonster("cthulhu", 3);
+
+    fight(myMonster, [monster1, monster2]);
+
+    expect(monster1.hp).to.be(7);
+    expect(monster2.hp).to.be(12);
+  });
+});
+```
+
+### !end-tests
 
 # !end-challenge
