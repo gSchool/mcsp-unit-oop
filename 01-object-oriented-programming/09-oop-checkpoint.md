@@ -461,8 +461,8 @@ describe('fight', () => {
 
     fight(monster, []);
 
-    expect(monster.hp).to.be(startingHp + 1);
-    expect(monster.temperature).to.be(temperature * 2);
+    expect(monster.hp).to.equal(hp + 1);
+    expect(monster.temperature).to.equal(temperature * 2);
   });
 
   it("attacks every monster in the given 'enemies' array", () => {
@@ -473,8 +473,8 @@ describe('fight', () => {
 
     fight(myMonster, [monster1, monster2]);
 
-    expect(monster1.hp).to.be(7);
-    expect(monster2.hp).to.be(12);
+    expect(monster1.hp).to.equal(7);
+    expect(monster2.hp).to.equal(12);
   });
 });
 ```
