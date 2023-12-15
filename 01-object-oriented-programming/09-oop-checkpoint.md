@@ -441,6 +441,7 @@ class WaterMonster extends Monster {
 
 ```js
 function fight(myMonster, enemies) {
+  // Your code here
 }
 ```
 
@@ -457,7 +458,7 @@ describe('fight', () => {
 
   it("calls 'chargePower' on 'myMonster'", () => {
     const monster = new FireMonster("bowser", 20);
-    const { hp, temperature } = monster.hp;
+    const { hp, temperature } = monster;
 
     fight(monster, []);
 
