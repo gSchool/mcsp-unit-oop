@@ -36,3 +36,6 @@ Standards:
   - Type: Lesson
     Path: /01-object-oriented-programming/08-lab-exercise.md
     UID: 028bf73fdd21169fedfdad64168a74fa
+  - Type: Checkpoint
+    Path: /01-object-oriented-programming/09-oop-checkpoint.md
+    UID: b9a854d8c323d7d3a79ff2c90e7bd447
