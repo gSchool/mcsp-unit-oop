@@ -16,8 +16,8 @@ Which of the following features related to the Object Oriented Programming parad
 ## !options
 
 * a. inheritance
-* b. instance variables
-* c. static variables
+* b. instance properties
+* c. static properties
 * d. abstract classes
 * e. interfaces
 * f. static methods
@@ -27,8 +27,8 @@ Which of the following features related to the Object Oriented Programming parad
 ## !answer
 
 * a. inheritance
-* b. instance variables
-* c. static variables
+* b. instance properties
+* c. static properties
 * f. static methods
 
 ## !end-answer
@@ -112,7 +112,7 @@ Which of the following is true about a child class in Javascript?
 
 ## !question
 
-Which of the following correctly describe JavaScript class syntax?
+Which of the following are try about an ES6 class?
 
 ## !end-question
 
@@ -121,7 +121,7 @@ Which of the following correctly describe JavaScript class syntax?
 * a. It uses the prototype chain to handle inheritance when creating objects
 * b. It must include a constructor function
 * c. It uses the `this` keyword to refer to an instance of the class
-* d. all of the above
+* d. All of the above
 
 ## !end-options
 
@@ -211,18 +211,18 @@ What are some of the reasons for using getter and setter methods in JavaScript?
 
 ## !options
 
-* a. To signal to other developers that a variable should not be altered directly
+* a. To signal to other developers that a property should not be altered directly
 * b. They are required methods in JavaScript classes
-* c. Accessing or changing the value of a “hidden” variable
-* d. Ensuring logic is run on setter parameters prior to changing a variable value
+* c. Accessing or changing the value of a “hidden” property
+* d. Ensuring logic is run on setter parameters prior to changing a property value
 
 ## !end-options
 
 ## !answer
 
-* a. To signal to other developers that a variable should not be altered directly
-* c. Accessing or changing the value of a “hidden” variable
-* d. Ensuring logic is run on setter parameters prior to changing a variable value
+* a. To signal to other developers that a property should not be altered directly
+* c. Accessing or changing the value of a “hidden” property
+* d. Ensuring logic is run on setter parameters prior to changing a property value
 
 ## !end-answer
 
@@ -233,17 +233,19 @@ What are some of the reasons for using getter and setter methods in JavaScript?
 
 * type: paragraph
 * id: 5a7090cd-3a00-4886-804b-b497ce774088
-* title: Use cases for hiding variables
+* title: Use cases for hiding properties
 * points: 3
 
 ## !question
 
-Can variables be made private to a class in JavaScript, and why would we want to make a variable in a class hidden? 
+Can properties be made private to a class in JavaScript, and why would we want to make a property in a class hidden? 
 
 ## !end-question
 
 ### !placeholder
+
 Write your answer here
+
 ### !end-placeholder
 
 # !end-challenge
