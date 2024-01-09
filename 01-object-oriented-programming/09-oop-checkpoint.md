@@ -112,7 +112,7 @@ Which of the following is true about a child class in Javascript?
 
 ## !question
 
-Which of the following are try about an ES6 class?
+Which of the following are true about an ES6 class?
 
 ## !end-question
 
