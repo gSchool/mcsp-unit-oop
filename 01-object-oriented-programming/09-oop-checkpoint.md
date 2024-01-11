@@ -121,7 +121,7 @@ Which of the following are true about an ES6 class?
 * a. It uses the prototype chain to handle inheritance when creating objects
 * b. It must include a constructor function
 * c. It uses the `this` keyword to refer to an instance of the class
-* d. All of the above
+* d. Instances of a class must be created using the `new` keyword
 
 ## !end-options
 
@@ -129,35 +129,34 @@ Which of the following are true about an ES6 class?
 
 * a. It uses the prototype chain to handle inheritance when creating objects
 * c. It uses the `this` keyword to refer to an instance of the class
+* d. Instances of a class must be created using the `new` keyword
 
 ## !end-answer
 
 # !end-challenge
 
-
 # !challenge
 
 * type: multiple-choice
 * id: 8f236686-4b6a-4871-b32b-7f48a3b3b3b4
-* title: Inherited method signatures
+* title: Overriding constructor
 * points: 2
 
 ## !question
 
-If a child class overrides a method from a parent class, the function should have the same number of parameters, with the same data types
+If a child class overrides a constructor from a parent class, it must call the parent constructor before setting any instance properties.
 
 ## !end-question
 
 ### !options
 
-* Always 
-* Sometimes
-* Never
+* True
+* False
 
 ### !end-options
 ## !answer
 
-Always 
+* True
 
 ## !end-answer
 
